@@ -1,0 +1,19 @@
+{
+  "name": "instagram-follower",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cron": "^2.3.1",
+    "dotenv": "^16.1.4",
+    "instagram-private-api": "^1.45.3",
+    "pg-promise": "^11.5.4",
+    "request-promise": "^4.2.6"
+  }
+}
