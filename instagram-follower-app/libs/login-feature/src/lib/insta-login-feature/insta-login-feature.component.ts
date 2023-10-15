@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LoginFacade } from 'login-data-access';
 
 @Component({
   selector: 'insta-login-feature',
-  template: `<insta-login-ui></insta-login-ui>`,
+  template: `<insta-login-ui (login)="login()"></insta-login-ui>`,
   styles: [],
 })
-export class InstaLoginFeatureComponent {}
+export class InstaLoginFeatureComponent {
+  private loginFacade = inject(LoginFacade);
+
+  login() {
+    this.loginFacade.login();
+  }
+}

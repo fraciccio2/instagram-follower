@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InstaLoginFeatureComponent } from './insta-login-feature/insta-login-feature.component';
 import { LoginUiModule } from 'login-ui';
 import { RouterModule } from '@angular/router';
+import { LoginDataAccessModule } from 'login-data-access';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
       },
     ]),
     LoginUiModule,
+    LoginDataAccessModule,
   ],
   declarations: [InstaLoginFeatureComponent],
   exports: [InstaLoginFeatureComponent],
