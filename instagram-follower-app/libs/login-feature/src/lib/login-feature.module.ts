@@ -4,6 +4,7 @@ import { LoginUiModule } from 'login-ui';
 import { RouterModule } from '@angular/router';
 import { LoginDataAccessModule } from 'login-data-access';
 import { LoginFeatureComponent } from './login-feature/login-feature.component';
+import { LoginFeatureGuard } from './login-feature.guard';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { LoginFeatureComponent } from './login-feature/login-feature.component';
       {
         path: 'login',
         component: LoginFeatureComponent,
+        canActivate: [LoginFeatureGuard],
       },
     ]),
     LoginUiModule,

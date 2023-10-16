@@ -1,6 +1,14 @@
 import { createAction, props } from '@ngrx/store';
+import { AccountRepositoryLoginResponseLogged_in_user } from 'login-util';
 
 export const login = createAction(
-  '[Login/API] Load Login Success',
+  '[Login/API] Login',
   props<{ username: string; password: string }>()
+);
+
+export const setLoggedUser = createAction('[Login/API] Set Logged User');
+
+export const setLoggedUserStore = createAction(
+  '[Login/API] Set Logged User Store',
+  props<{ loggedUser: AccountRepositoryLoginResponseLogged_in_user }>()
 );

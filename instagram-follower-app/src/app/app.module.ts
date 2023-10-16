@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { LoaderFeatureModule } from 'loader-feature';
+import { HomeFeatureModule } from 'home-feature';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,13 @@ import { LoaderFeatureModule } from 'loader-feature';
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'login',
+      },
+    ]),
     RouterOutlet,
     StoreModule.forRoot(
       {},
@@ -39,6 +46,7 @@ import { LoaderFeatureModule } from 'loader-feature';
     //COMPONENTI
     LoginFeatureModule,
     LoaderFeatureModule,
+    HomeFeatureModule,
   ],
   bootstrap: [AppComponent],
 })
