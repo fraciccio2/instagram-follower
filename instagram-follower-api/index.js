@@ -183,6 +183,7 @@ const express = require("express");
 const path = require("path");
 const { IgApiClient } = require("instagram-private-api");
 const cors = require("cors");
+const request = require("request");
 
 const app = express();
 const port = 3000;
@@ -223,6 +224,11 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+app.get("/proxy-image", (req, res) => {
+  const imageUrl = req.query.imageUrl;
+  request(imageUrl).pipe(res);
 });
 
 app.listen(port, () => {
