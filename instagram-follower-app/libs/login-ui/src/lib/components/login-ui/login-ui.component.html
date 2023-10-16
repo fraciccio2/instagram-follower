@@ -10,9 +10,14 @@
               width="100"
             />
           </div>
-          <div class="card-body text-center">
+          <div
+            class="card-body text-center"
+            *ngIf="formGroupLogin"
+            [formGroup]="formGroupLogin"
+          >
             <div class="form-group mb-2">
               <input
+                [formControlName]="formControlNameUsername"
                 type="text"
                 class="form-control"
                 placeholder="Nome utente o email"
@@ -20,12 +25,14 @@
             </div>
             <div class="form-group mb-2">
               <input
+                [formControlName]="formControlNamePassword"
                 type="password"
                 class="form-control"
                 placeholder="Password"
               />
             </div>
             <button
+              [disabled]="formGroupLogin.invalid"
               type="button"
               class="btn btn-primary btn-block"
               (click)="login.emit()"

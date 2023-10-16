@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InstaLoginFeatureComponent } from './insta-login-feature/insta-login-feature.component';
 import { LoginUiModule } from 'login-ui';
 import { RouterModule } from '@angular/router';
 import { LoginDataAccessModule } from 'login-data-access';
+import { LoginFeatureComponent } from './login-feature/login-feature.component';
 
 @NgModule({
   imports: [
@@ -11,13 +11,13 @@ import { LoginDataAccessModule } from 'login-data-access';
     RouterModule.forChild([
       {
         path: 'login',
-        component: InstaLoginFeatureComponent,
+        component: LoginFeatureComponent,
       },
     ]),
     LoginUiModule,
     LoginDataAccessModule,
   ],
-  declarations: [InstaLoginFeatureComponent],
-  exports: [InstaLoginFeatureComponent],
+  declarations: [LoginFeatureComponent],
+  exports: [LoginFeatureComponent],
 })
 export class LoginFeatureModule {}

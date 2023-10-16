@@ -1,3 +1,2 @@
 export * from './lib/login-feature.module';
-
-export * from './lib/insta-login-feature/insta-login-feature.component';
+export * from './lib/login-feature/login-feature.component';

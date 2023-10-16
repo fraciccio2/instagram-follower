@@ -8,6 +8,8 @@ nx g @nx/angular:library my-ui-lib --tags=ui
 
 ```
 nx g @nx/angular:component my-component --project=name-library --export
+```
+```
 nx g @x/angular:component my-component --project=name-library --inline-template --inline-style --flat --export
 ```
 

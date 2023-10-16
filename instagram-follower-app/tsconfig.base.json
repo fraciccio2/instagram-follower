@@ -15,9 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "loader-data-access": ["libs/loader-data-access/src/index.ts"],
+      "loader-feature": ["libs/loader-feature/src/index.ts"],
+      "loader-ui": ["libs/loader-ui/src/index.ts"],
       "login-data-access": ["libs/login-data-access/src/index.ts"],
       "login-feature": ["libs/login-feature/src/index.ts"],
-      "login-ui": ["libs/login-ui/src/index.ts"]
+      "login-ui": ["libs/login-ui/src/index.ts"],
+      "login-util": ["libs/login-util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

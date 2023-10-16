@@ -16,9 +16,7 @@ export class LoginFacade {
    * Use the initialization action to perform one
    * or more tasks in your Effects.
    */
-  login() {
-    this.store.dispatch(
-      LoginActions.login({ loginData: { password: '', username: '' } })
-    );
+  login(username: string, password: string) {
+    this.store.dispatch(LoginActions.login({ username, password }));
   }
 }
