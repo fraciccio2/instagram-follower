@@ -32,3 +32,13 @@ export const getUserIDontFollow = createSelector(
         !state.infos?.following.find((fol) => fol.username === follow.username)
     )
 );
+
+export const getUsersImageProfiles = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.imagesProfile
+);
+
+export const getUsersImageProfilesLoading = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.loadingUsersImageProfile
+);

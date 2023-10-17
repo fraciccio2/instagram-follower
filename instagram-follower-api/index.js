@@ -240,8 +240,8 @@ app.get("/infos", async (req, res) => {
     const followersFeed = ig.feed.accountFollowers(id);
     const followingFeed = ig.feed.accountFollowing(id);
     const extractFollowers = (push1, push2) => {
-      Promise.all([followersFeed.items(), followingFeed.items()])
-        .then((items) => {
+      Promise.all([followersFeed.items(), followingFeed.items()]).then(
+        (items) => {
           if (push1) {
             followers.push(...items[0]);
           }
@@ -268,16 +268,13 @@ app.get("/infos", async (req, res) => {
               following: following,
             });
           }
-        })
-        //TODO controllare che il catch funzioni
-        .catch((e) => {
-          res.status(e.status ?? 401).json({ error: e.error });
-        });
+        }
+      );
     };
     extractFollowers(true, true);
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: "Errore durante il recupero dei dati" });
+    res.status(e.response.statusCode).json({ error: e.message });
   }
 });
 

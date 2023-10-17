@@ -20,3 +20,13 @@ export const loadProfileInfos = createAction(
   '[Home/API] Load Profile Infos',
   props<{ infos: AccountUsersModel }>()
 );
+
+export const initUsersImageProfile = createAction(
+  '[Home/API] Init Users Image Profile',
+  props<{ usersLinks: { username: string; link: string }[] }>()
+);
+
+export const loadUsersImageProfile = createAction(
+  '[Home/API] Load Users Image Profile',
+  props<{ imagesProfile: Record<string, string> }>()
+);

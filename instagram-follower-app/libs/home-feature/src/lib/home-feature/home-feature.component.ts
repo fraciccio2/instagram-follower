@@ -16,6 +16,7 @@ import { HomeShowUsersModalComponent } from 'home-sub-feature';
     [followedNotReturn]="followedNotReturn$ | async"
     [userIDontFollow]="userIDontFollow$ | async"
     (showFollowingModal)="showFollowingModal($event)"
+    (showFollowerModal)="showFollowerModal($event)"
   ></home-ui>`,
   styles: [],
 })
@@ -40,5 +41,11 @@ export class HomeFeatureComponent implements OnInit {
     const modal = this.modalService.open(HomeShowUsersModalComponent);
     modal.componentInstance.title = 'Utenti che segui';
     modal.componentInstance.users = following;
+  }
+
+  showFollowerModal(follower: AccountFollowersFeed[]) {
+    const modal = this.modalService.open(HomeShowUsersModalComponent);
+    modal.componentInstance.title = 'Utenti che ti seguono';
+    modal.componentInstance.users = follower;
   }
 }

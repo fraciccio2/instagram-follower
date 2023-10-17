@@ -1,16 +1,18 @@
-import { Injectable, inject } from '@angular/core';
-import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { switchMap, catchError, of, map, EMPTY } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import * as HomeActions from './home.actions';
-import * as HomeFeature from './home.reducer';
+import * as HomeSelectors from './home.selectors';
 import { HomeDataAccessRestService } from '../../home-data-access-rest.service';
 import { endLoader, LoaderFacade } from 'loader-data-access';
+import { select, Store } from '@ngrx/store';
 
 @Injectable()
 export class HomeEffects {
   private actions$ = inject(Actions);
   private homeDataAccessRestService = inject(HomeDataAccessRestService);
   private loaderFacade = inject(LoaderFacade);
+  private store = inject(Store);
 
   initImageProfile$ = createEffect(() =>
     this.actions$.pipe(
@@ -25,6 +27,38 @@ export class HomeEffects {
             });
           }),
           endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
+
+  initUsersImageProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initUsersImageProfile),
+      concatLatestFrom(() =>
+        this.store.pipe(select(HomeSelectors.getUsersImageProfiles))
+      ),
+      switchMap(([action, usersImageProfile]) => {
+        const obsRest: Observable<Blob>[] = [];
+        action.usersLinks.forEach((user) => {
+          if (!Object.keys(usersImageProfile).includes(user.username)) {
+            obsRest.push(
+              this.homeDataAccessRestService.getImageProfile(user.link)
+            );
+          }
+        });
+        return forkJoin(obsRest).pipe(
+          map((imagesProfile) => {
+            const createURLs: Record<string, string> = {};
+            imagesProfile.forEach(
+              (imageProfile, index) =>
+                (createURLs[action.usersLinks[index].username] =
+                  URL.createObjectURL(imageProfile))
+            );
+            return HomeActions.loadUsersImageProfile({
+              imagesProfile: createURLs,
+            });
+          })
         );
       })
     )

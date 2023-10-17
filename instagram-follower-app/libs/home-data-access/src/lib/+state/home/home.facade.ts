@@ -18,6 +18,12 @@ export class HomeFacade {
     select(HomeSelectors.getUserFollowedButNotReturn)
   );
   userIDontFollow$ = this.store.pipe(select(HomeSelectors.getUserIDontFollow));
+  imagesProfiles$ = this.store.pipe(
+    select(HomeSelectors.getUsersImageProfiles)
+  );
+  usersImageProfileLoading$ = this.store.pipe(
+    select(HomeSelectors.getUsersImageProfilesLoading)
+  );
 
   /**
    * Use the initialization action to perform one
@@ -29,5 +35,9 @@ export class HomeFacade {
 
   initProfileInfos(username: string) {
     this.store.dispatch(HomeActions.initProfileInfos({ username }));
+  }
+
+  initUsersImagesProfile(usersLinks: { username: string; link: string }[]) {
+    this.store.dispatch(HomeActions.initUsersImageProfile({ usersLinks }));
   }
 }
