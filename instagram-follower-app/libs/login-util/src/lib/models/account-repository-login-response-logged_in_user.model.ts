@@ -1,14 +1,8 @@
 import { AccountRepositoryLoginResponseNametag } from './account-repository-login-response-nametag.model';
+import { AccountModel } from 'ng';
 
-export interface AccountRepositoryLoginResponseLogged_in_user {
-  pk: number;
-  username: string;
-  full_name: string;
-  is_private: boolean;
-  profile_pic_url: string;
-  profile_pic_id: string;
-  is_verified: boolean;
-  has_anonymous_profile_picture: boolean;
+export interface AccountRepositoryLoginResponseLogged_in_user
+  extends AccountModel {
   can_boost_post: boolean;
   is_business: boolean;
   account_type: number;

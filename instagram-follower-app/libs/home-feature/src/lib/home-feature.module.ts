@@ -5,6 +5,7 @@ import { HomeUiModule } from 'home-ui';
 import { RouterModule } from '@angular/router';
 import { LoggedUserGuard } from 'ng';
 import { HomeDataAccessModule } from 'home-data-access';
+import { HomeFeatureGuard } from './home-feature.guard';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { HomeDataAccessModule } from 'home-data-access';
       {
         path: 'home',
         component: HomeFeatureComponent,
-        canActivate: [LoggedUserGuard],
+        canActivate: [LoggedUserGuard, HomeFeatureGuard],
       },
     ]),
     HomeUiModule,

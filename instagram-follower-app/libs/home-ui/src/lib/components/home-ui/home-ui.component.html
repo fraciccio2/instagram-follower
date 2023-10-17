@@ -1,9 +1,12 @@
 <div class="container">
   <div class="card mt-3">
-    <div class="card-body" *ngIf="loggedUser">
+    <div class="card-body" *ngIf="loggedUser && infos">
       <div class="d-flex justify-content-center align-items-center">
-        <div class="d-flex flex-column text-center me-3">
-          <label class="fw-bold">488</label>
+        <div
+          class="d-flex flex-column text-center me-3"
+          (click)="showFollowerModal.emit(infos.followers)"
+        >
+          <label class="fw-bold">{{ infos.followers.length }}</label>
           <label>Follower</label>
         </div>
         <div class="d-flex flex-column">
@@ -16,9 +19,30 @@
           />
           <label class="fw-bold">{{ loggedUser.username }}</label>
         </div>
-        <div class="d-flex flex-column text-center ms-3">
-          <label class="fw-bold">290</label>
+        <div
+          class="d-flex flex-column text-center ms-3"
+          (click)="showFollowingModal.emit(infos.following)"
+        >
+          <label class="fw-bold">{{ infos.following.length }}</label>
           <label>Seguiti</label>
+        </div>
+      </div>
+      <div class="card mt-5 mb-3 mx-3">
+        <div class="card-body d-flex align-items-center">
+          <label class="fw-bold">Utenti che segui e che non ricambiano:</label>
+          <div class="ms-auto">
+            {{ followedNotReturn?.length ?? 0 }}
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3 mx-3">
+        <div class="card-body d-flex align-items-center">
+          <label class="fw-bold"
+            >Utenti che ti seguono e che non ricambi:</label
+          >
+          <div class="ms-auto">
+            {{ userIDontFollow?.length ?? 0 }}
+          </div>
         </div>
       </div>
     </div>

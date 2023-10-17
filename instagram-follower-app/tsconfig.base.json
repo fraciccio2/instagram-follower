@@ -17,7 +17,9 @@
     "paths": {
       "home-data-access": ["libs/home-data-access/src/index.ts"],
       "home-feature": ["libs/home-feature/src/index.ts"],
+      "home-sub-feature": ["libs/home-sub-feature/src/index.ts"],
       "home-ui": ["libs/home-ui/src/index.ts"],
+      "home-util": ["libs/home-util/src/index.ts"],
       "loader-data-access": ["libs/loader-data-access/src/index.ts"],
       "loader-feature": ["libs/loader-feature/src/index.ts"],
       "loader-ui": ["libs/loader-ui/src/index.ts"],

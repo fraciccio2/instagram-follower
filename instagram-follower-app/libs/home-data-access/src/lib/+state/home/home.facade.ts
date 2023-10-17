@@ -13,6 +13,11 @@ export class HomeFacade {
    * and expose them as observables through the facade.
    */
   imageProfile$ = this.store.pipe(select(HomeSelectors.getImageProfile));
+  infos$ = this.store.pipe(select(HomeSelectors.getProfileInfos));
+  followedNotReturn$ = this.store.pipe(
+    select(HomeSelectors.getUserFollowedButNotReturn)
+  );
+  userIDontFollow$ = this.store.pipe(select(HomeSelectors.getUserIDontFollow));
 
   /**
    * Use the initialization action to perform one
@@ -20,5 +25,9 @@ export class HomeFacade {
    */
   initImageProfile(link: string) {
     this.store.dispatch(HomeActions.initImageProfile({ link }));
+  }
+
+  initProfileInfos(username: string) {
+    this.store.dispatch(HomeActions.initProfileInfos({ username }));
   }
 }

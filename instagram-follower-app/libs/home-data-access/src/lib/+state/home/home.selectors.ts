@@ -9,3 +9,26 @@ export const getImageProfile = createSelector(
   selectHomeState,
   (state: HomeState) => state.imageProfile
 );
+
+export const getProfileInfos = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.infos
+);
+
+export const getUserFollowedButNotReturn = createSelector(
+  selectHomeState,
+  (state: HomeState) =>
+    state.infos?.following.filter(
+      (follow) =>
+        !state.infos?.followers.find((fol) => fol.username === follow.username)
+    )
+);
+
+export const getUserIDontFollow = createSelector(
+  selectHomeState,
+  (state: HomeState) =>
+    state.infos?.followers.filter(
+      (follow) =>
+        !state.infos?.following.find((fol) => fol.username === follow.username)
+    )
+);

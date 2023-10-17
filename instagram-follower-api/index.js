@@ -231,6 +231,56 @@ app.get("/proxy-image", (req, res) => {
   request(imageUrl).pipe(res);
 });
 
+app.get("/infos", async (req, res) => {
+  const username = req.query.username;
+  try {
+    const id = await ig.user.getIdByUsername(username);
+    const followers = []; //mi seguono;
+    const following = []; //seguo io;
+    const followersFeed = ig.feed.accountFollowers(id);
+    const followingFeed = ig.feed.accountFollowing(id);
+    const extractFollowers = (push1, push2) => {
+      Promise.all([followersFeed.items(), followingFeed.items()])
+        .then((items) => {
+          if (push1) {
+            followers.push(...items[0]);
+          }
+          if (push2) {
+            following.push(...items[1]);
+          }
+          const isMore1 = followersFeed.isMoreAvailable() && push1;
+          const isMore2 = followingFeed.isMoreAvailable() && push2;
+          if (isMore1 && isMore2) {
+            setTimeout(() => {
+              extractFollowers(true, true);
+            }, 5000);
+          } else if (isMore1 && !isMore2) {
+            setTimeout(() => {
+              extractFollowers(true, false);
+            }, 5000);
+          } else if (!isMore1 && isMore2) {
+            setTimeout(() => {
+              extractFollowers(false, true);
+            }, 5000);
+          } else {
+            res.status(200).json({
+              followers: followers,
+              following: following,
+            });
+          }
+        })
+        //TODO controllare che il catch funzioni
+        .catch((e) => {
+          res.status(e.status ?? 401).json({ error: e.error });
+        });
+    };
+    extractFollowers(true, true);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Errore durante il recupero dei dati" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
 });

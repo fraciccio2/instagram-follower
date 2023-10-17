@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AccountRepositoryLoginResponseLogged_in_user } from 'login-util';
+import { AccountFollowersFeed, AccountUsersModel } from 'home-util';
 
 @Component({
   selector: 'home-ui',
@@ -12,4 +13,9 @@ export class HomeUiComponent {
     | undefined
     | null;
   @Input() imageProfile: string | undefined | null;
+  @Input() infos: AccountUsersModel | undefined | null;
+  @Input() followedNotReturn: AccountFollowersFeed[] | undefined | null;
+  @Input() userIDontFollow: AccountFollowersFeed[] | undefined | null;
+  @Output() showFollowerModal = new EventEmitter<AccountFollowersFeed[]>();
+  @Output() showFollowingModal = new EventEmitter<AccountFollowersFeed[]>();
 }
