@@ -21,7 +21,14 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     <div class="modal-body">
       <div class="input-group mb-3">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
-        <input type="text" class="form-control" placeholder="Cerca" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Cerca"
+          name="searchUser"
+          ngModel
+          #searchUser="ngModel"
+        />
       </div>
       <div
         *ngIf="imagesProfiles$ | async as imagesProfiles"
@@ -34,7 +41,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
         (scrolled)="onScroll()"
       >
         <div
-          *ngFor="let user of showUsers"
+          *ngFor="
+            let user of showUsers
+              | filterByText : searchUser.value : ['username', 'full_name']
+          "
           class="d-flex align-items-center mb-3"
         >
           <img

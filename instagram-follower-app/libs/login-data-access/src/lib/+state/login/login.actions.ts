@@ -12,3 +12,5 @@ export const setLoggedUserStore = createAction(
   '[Login/API] Set Logged User Store',
   props<{ loggedUser: AccountRepositoryLoginResponseLogged_in_user }>()
 );
+
+export const logout = createAction('[Login/API] Logout');

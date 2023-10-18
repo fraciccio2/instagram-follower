@@ -14,7 +14,7 @@ import { HomeShowUsersModalComponent } from 'home-sub-feature';
     [imageProfile]="imageProfile$ | async"
     [infos]="infos$ | async"
     [followedNotReturn]="followedNotReturn$ | async"
-    [userIDontFollow]="userIDontFollow$ | async"
+    [usersIDontFollow]="usersIDontFollow$ | async"
     (showFollowingModal)="showFollowingModal($event)"
     (showFollowerModal)="showFollowerModal($event)"
   ></home-ui>`,
@@ -29,7 +29,7 @@ export class HomeFeatureComponent implements OnInit {
   imageProfile$ = this.homeFacade.imageProfile$;
   infos$ = this.homeFacade.infos$;
   followedNotReturn$ = this.homeFacade.followedNotReturn$;
-  userIDontFollow$ = this.homeFacade.userIDontFollow$;
+  usersIDontFollow$ = this.homeFacade.usersIDontFollow$;
 
   ngOnInit() {
     this.loggedUser$.pipe(filterNullish(), take(1)).subscribe((loggedUser) => {

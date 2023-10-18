@@ -21,4 +21,8 @@ export class LoginFacade {
   login(username: string, password: string) {
     this.store.dispatch(LoginActions.login({ username, password }));
   }
+
+  logout() {
+    this.store.dispatch(LoginActions.logout());
+  }
 }

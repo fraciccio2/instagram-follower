@@ -15,7 +15,8 @@ export class HomeUiComponent {
   @Input() imageProfile: string | undefined | null;
   @Input() infos: AccountUsersModel | undefined | null;
   @Input() followedNotReturn: AccountFollowersFeed[] | undefined | null;
-  @Input() userIDontFollow: AccountFollowersFeed[] | undefined | null;
+  @Input() usersIDontFollow: AccountFollowersFeed[] | undefined | null;
+  //@Input() userIDontFollow: AccountFollowersFeed[] | undefined | null;
   @Output() showFollowerModal = new EventEmitter<AccountFollowersFeed[]>();
   @Output() showFollowingModal = new EventEmitter<AccountFollowersFeed[]>();
 }

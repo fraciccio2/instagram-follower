@@ -24,7 +24,7 @@ export const getUserFollowedButNotReturn = createSelector(
     )
 );
 
-export const getUserIDontFollow = createSelector(
+export const getUsersIDontFollow = createSelector(
   selectHomeState,
   (state: HomeState) =>
     state.infos?.followers.filter(

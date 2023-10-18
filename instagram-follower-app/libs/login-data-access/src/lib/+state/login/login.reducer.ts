@@ -21,7 +21,8 @@ const reducer = createReducer(
   on(LoginActions.setLoggedUserStore, (state, { loggedUser }) => ({
     ...state,
     loggedUser,
-  }))
+  })),
+  on(LoginActions.logout, (state) => initialLoginState)
 );
 
 export function loginReducer(state: LoginState | undefined, action: Action) {

@@ -13,6 +13,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { LoaderFeatureModule } from 'loader-feature';
 import { HomeFeatureModule } from 'home-feature';
+import { loginInterceptors } from 'ng';
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,6 +49,7 @@ import { HomeFeatureModule } from 'home-feature';
     LoaderFeatureModule,
     HomeFeatureModule,
   ],
+  providers: [...loginInterceptors],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

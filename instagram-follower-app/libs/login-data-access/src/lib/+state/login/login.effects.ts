@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import * as LoginActions from './login.actions';
 import { LoginDataAccessRestService } from '../../login-data-access-rest.service';
 import { endLoader, LoaderFacade } from 'loader-data-access';
-import { Action, Store } from '@ngrx/store';
+import { Action, createAction, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -54,6 +54,18 @@ export class LoginEffects implements OnInitEffects {
               LoginActions.setLoggedUserStore({ loggedUser: loggedUserObj })
             );
           }
+        })
+      ),
+    { dispatch: false }
+  );
+
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(LoginActions.logout),
+        map(() => {
+          localStorage.removeItem('auth');
+          this.router.navigate(['login']).catch((e) => console.error(e));
         })
       ),
     { dispatch: false }

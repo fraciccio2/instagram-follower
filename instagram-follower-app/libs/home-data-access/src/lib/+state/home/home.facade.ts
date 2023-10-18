@@ -17,7 +17,9 @@ export class HomeFacade {
   followedNotReturn$ = this.store.pipe(
     select(HomeSelectors.getUserFollowedButNotReturn)
   );
-  userIDontFollow$ = this.store.pipe(select(HomeSelectors.getUserIDontFollow));
+  usersIDontFollow$ = this.store.pipe(
+    select(HomeSelectors.getUsersIDontFollow)
+  );
   imagesProfiles$ = this.store.pipe(
     select(HomeSelectors.getUsersImageProfiles)
   );
