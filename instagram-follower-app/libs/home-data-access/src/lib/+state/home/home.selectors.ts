@@ -33,6 +33,14 @@ export const getUsersIDontFollow = createSelector(
     )
 );
 
+export const getUsersFollowViceVersa = createSelector(
+  selectHomeState,
+  (state: HomeState) =>
+    state.infos?.following.filter((follow) =>
+      state.infos?.followers.find((fol) => fol.username === follow.username)
+    )
+);
+
 export const getUsersImageProfiles = createSelector(
   selectHomeState,
   (state: HomeState) => state.imagesProfile

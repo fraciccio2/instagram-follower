@@ -240,8 +240,8 @@ app.get("/infos", async (req, res) => {
     const followersFeed = ig.feed.accountFollowers(id);
     const followingFeed = ig.feed.accountFollowing(id);
     const extractFollowers = (push1, push2) => {
-      Promise.all([followersFeed.items(), followingFeed.items()]).then(
-        (items) => {
+      Promise.all([followersFeed.items(), followingFeed.items()])
+        .then((items) => {
           if (push1) {
             followers.push(...items[0]);
           }
@@ -268,8 +268,11 @@ app.get("/infos", async (req, res) => {
               following: following,
             });
           }
-        }
-      );
+        })
+        .catch((e) => {
+          console.error(e);
+          res.status(e.response.statusCode).json({ error: e.message });
+        });
     };
     extractFollowers(true, true);
   } catch (e) {

@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AccountRepositoryLoginResponseLogged_in_user } from 'login-util';
-import { AccountFollowersFeed, AccountUsersModel } from 'home-util';
+import {
+  AccountFollowersFeed,
+  AccountUsersModel,
+  UsersTypeEnum,
+} from 'home-util';
 
 @Component({
   selector: 'home-ui',
@@ -16,7 +20,11 @@ export class HomeUiComponent {
   @Input() infos: AccountUsersModel | undefined | null;
   @Input() followedNotReturn: AccountFollowersFeed[] | undefined | null;
   @Input() usersIDontFollow: AccountFollowersFeed[] | undefined | null;
-  //@Input() userIDontFollow: AccountFollowersFeed[] | undefined | null;
-  @Output() showFollowerModal = new EventEmitter<AccountFollowersFeed[]>();
-  @Output() showFollowingModal = new EventEmitter<AccountFollowersFeed[]>();
+  @Input() usersFollowerViceVersa: AccountFollowersFeed[] | undefined | null;
+  @Output() showUsersModal = new EventEmitter<{
+    users: AccountFollowersFeed[];
+    type: UsersTypeEnum;
+  }>();
+
+  UsersTypeEnum = UsersTypeEnum;
 }

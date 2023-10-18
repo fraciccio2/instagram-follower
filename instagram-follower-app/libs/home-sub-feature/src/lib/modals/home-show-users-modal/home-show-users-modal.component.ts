@@ -20,14 +20,20 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     </div>
     <div class="modal-body">
       <div class="input-group mb-3">
-        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <span
+          class="input-group-text"
+          [ngClass]="{ disabled: !showUsers.length }"
+          ><i class="bi bi-search"></i
+        ></span>
         <input
+          [disabled]="!showUsers.length"
           type="text"
           class="form-control"
           placeholder="Cerca"
           name="searchUser"
           ngModel
           #searchUser="ngModel"
+          (input)="filterUsers(searchUser.value)"
         />
       </div>
       <div
@@ -41,10 +47,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
         (scrolled)="onScroll()"
       >
         <div
-          *ngFor="
-            let user of showUsers
-              | filterByText : searchUser.value : ['username', 'full_name']
-          "
+          *ngFor="let user of showUsers"
           class="d-flex align-items-center mb-3"
         >
           <img
@@ -75,6 +78,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
         .input-group-text {
           background-color: white;
           border-right: 0;
+          &.disabled {
+            background-color: rgb(233, 236, 239);
+          }
         }
         .form-control {
           border-left: 0;
@@ -102,6 +108,7 @@ export class HomeShowUsersModalComponent implements OnInit {
   showUsers: AccountFollowersFeed[] = [];
   page = 0;
   numberForLoader = 20;
+  filterValue: string | null = null;
 
   usersImageProfileLoading$ = this.homeFacade.usersImageProfileLoading$;
   imagesProfiles$ = this.homeFacade.imagesProfiles$;
@@ -121,11 +128,56 @@ export class HomeShowUsersModalComponent implements OnInit {
 
   scrollNewUsers() {
     if (this.users) {
+      if (this.filterValue) {
+        this.scrollNewUsersFilter();
+      } else {
+        this.populateScroll();
+      }
+    }
+  }
+
+  filterUsers(value: string) {
+    this.filterValue = value;
+    if (this.users && this.filterValue) {
+      this.scrollNewUsersFilter(true);
+    } else if (!this.filterValue) {
+      this.populateScroll(true);
+    }
+  }
+
+  scrollNewUsersFilter(first?: boolean) {
+    if (this.users) {
+      const filterUsers = this.users.filter(
+        (user) =>
+          user.username.includes(this.filterValue ?? '') ||
+          user.full_name.includes(this.filterValue ?? '')
+      );
+      first ? (this.page = 0) : null;
+      const usersForRest = filterUsers.slice(
+        this.page * this.numberForLoader,
+        this.numberForLoader * (this.page + 1)
+      );
+      first
+        ? (this.showUsers = usersForRest)
+        : this.showUsers.push(...usersForRest);
+      this.homeFacade.initUsersImagesProfile(
+        usersForRest.map((user) => ({
+          username: user.username,
+          link: user.profile_pic_url,
+        }))
+      );
+    }
+  }
+
+  populateScroll(first?: boolean) {
+    if (this.users) {
       const usersForRest = this.users.slice(
         this.page * this.numberForLoader,
         this.numberForLoader * (this.page + 1)
       );
-      this.showUsers.push(...usersForRest);
+      first
+        ? (this.showUsers = usersForRest)
+        : this.showUsers.push(...usersForRest);
       this.homeFacade.initUsersImagesProfile(
         usersForRest.map((user) => ({
           username: user.username,

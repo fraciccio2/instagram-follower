@@ -40,11 +40,13 @@ export class HomeEffects {
       ),
       switchMap(([action, usersImageProfile]) => {
         const obsRest: Observable<Blob>[] = [];
+        const newUsersLink: { username: string; link: string }[] = [];
         action.usersLinks.forEach((user) => {
           if (!Object.keys(usersImageProfile).includes(user.username)) {
             obsRest.push(
               this.homeDataAccessRestService.getImageProfile(user.link)
             );
+            newUsersLink.push(user);
           }
         });
         return forkJoin(obsRest).pipe(
@@ -52,7 +54,7 @@ export class HomeEffects {
             const createURLs: Record<string, string> = {};
             imagesProfile.forEach(
               (imageProfile, index) =>
-                (createURLs[action.usersLinks[index].username] =
+                (createURLs[newUsersLink[index].username] =
                   URL.createObjectURL(imageProfile))
             );
             return HomeActions.loadUsersImageProfile({

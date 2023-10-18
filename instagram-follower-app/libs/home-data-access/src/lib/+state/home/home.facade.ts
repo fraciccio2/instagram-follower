@@ -26,6 +26,9 @@ export class HomeFacade {
   usersImageProfileLoading$ = this.store.pipe(
     select(HomeSelectors.getUsersImageProfilesLoading)
   );
+  usersFollowerViceVersa$ = this.store.pipe(
+    select(HomeSelectors.getUsersFollowViceVersa)
+  );
 
   /**
    * Use the initialization action to perform one
