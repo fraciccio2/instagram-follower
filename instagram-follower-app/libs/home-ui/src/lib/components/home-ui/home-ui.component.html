@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="card mt-3">
+<div class="d-flex vh-100">
+  <div class="mt-3 container mb-auto border-0">
     <div class="card-body" *ngIf="loggedUser && infos">
       <div class="d-flex justify-content-center align-items-center">
         <div
@@ -14,12 +14,10 @@
           <label class="fw-bold">{{ infos.followers.length }}</label>
           <label>Follower</label>
         </div>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column text-center">
           <img
             *ngIf="imageProfile"
             [src]="imageProfile"
-            width="150"
-            height="150"
             class="mx-auto rounded-circle"
           />
           <label class="fw-bold">{{ loggedUser.username }}</label>
@@ -38,7 +36,7 @@
         </div>
       </div>
       <div
-        class="card mt-5 mb-3 mx-3"
+        class="card mt-5 mb-3 mx-3 clickable-card"
         (click)="
           showUsersModal.emit({
             users: followedNotReturn ?? [],
@@ -54,7 +52,7 @@
         </div>
       </div>
       <div
-        class="card mb-3 mx-3"
+        class="card mb-3 mx-3 clickable-card"
         (click)="
           showUsersModal.emit({
             users: usersIDontFollow ?? [],
@@ -72,7 +70,7 @@
         </div>
       </div>
       <div
-        class="card mb-3 mx-3"
+        class="card mb-3 mx-3 clickable-card"
         (click)="
           showUsersModal.emit({
             users: usersFollowerViceVersa ?? [],

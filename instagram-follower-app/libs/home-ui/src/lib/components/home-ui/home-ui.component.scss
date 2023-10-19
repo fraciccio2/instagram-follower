@@ -1,0 +1,29 @@
+$green-m: #00ff41;
+
+.vh-100 {
+  background-color: black;
+  color: $green-m;
+
+  .clickable-card {
+    border: 0;
+    border-radius: 3.6rem;
+    background-color: $green-m;
+  }
+
+  img {
+    width: 9.375rem;
+    height: 9.375rem;
+    border: 3px solid $green-m !important;
+  }
+}
+
+@media (max-width: 756px) {
+  .vh-100 {
+    font-size: 13px;
+
+    img {
+      width: 9rem;
+      height: 9rem;
+    }
+  }
+}
