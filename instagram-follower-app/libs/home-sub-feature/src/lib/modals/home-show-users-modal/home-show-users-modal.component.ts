@@ -20,13 +20,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     </div>
     <div class="modal-body">
       <div class="input-group mb-3">
-        <span
-          class="input-group-text"
-          [ngClass]="{ disabled: !showUsers.length }"
+        <span class="input-group-text" [ngClass]="{ disabled: !users?.length }"
           ><i class="bi bi-search"></i
         ></span>
         <input
-          [disabled]="!showUsers.length"
+          [disabled]="!users?.length"
           type="text"
           class="form-control"
           placeholder="Cerca"
@@ -66,27 +64,39 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   `,
   styles: [
     `
-      .close {
-        background-color: white;
-        border: 0;
-        &:focus-visible {
-          outline: 0 !important;
+      .modal-header {
+        background-color: black;
+        color: var(--green-m);
+        border-bottom-color: var(--green-m);
+
+        .close {
+          background-color: transparent;
+          border: 0;
+          color: var(--green-m);
+          &:focus-visible {
+            outline: 0 !important;
+          }
         }
       }
 
-      .input-group {
-        .input-group-text {
-          background-color: white;
-          border-right: 0;
-          &.disabled {
-            background-color: rgb(233, 236, 239);
+      .modal-body {
+        background-color: black;
+        color: var(--green-m);
+        .input-group {
+          border: 0;
+          .input-group-text {
+            background-color: #565151;
+            border: 0;
+            &.disabled {
+              background-color: #565151;
+            }
           }
-        }
-        .form-control {
-          border-left: 0;
-          &:focus {
-            box-shadow: none;
-            border-color: rgb(222, 226, 230);
+          .form-control {
+            background-color: #565151;
+            border: 0;
+            &:focus {
+              box-shadow: none;
+            }
           }
         }
       }
@@ -94,6 +104,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
       .data-container {
         max-height: 400px;
         overflow: auto;
+
+        .rounded-circle {
+          border: 1px solid var(--green-m);
+        }
       }
     `,
   ],

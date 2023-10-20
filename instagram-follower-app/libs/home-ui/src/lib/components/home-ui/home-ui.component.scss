@@ -1,20 +1,32 @@
-$green-m: #00ff41;
-
 .vh-100 {
-  background-color: black;
-  color: $green-m;
+  background-color: transparent;
+  color: var(--green-m);
+  width: 100%;
 
   .clickable-card {
-    border: 0;
-    border-radius: 3.6rem;
-    background-color: $green-m;
+    border: 3px solid var(--green-m) !important;
+    border-radius: var(--border-r);
+    background-color: black;
+    color: var(--green-m) !important;
   }
 
   img {
     width: 9.375rem;
     height: 9.375rem;
-    border: 3px solid $green-m !important;
+    border: 3px solid var(--green-m) !important;
   }
+}
+
+.container-home {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 @media (max-width: 756px) {

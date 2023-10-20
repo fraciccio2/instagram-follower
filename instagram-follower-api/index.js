@@ -201,6 +201,7 @@ app.use(cors(corsOptions));
 app.post("/login", async (req, res) => {
   const logOnInstagram = async (username, password) => {
     ig.state.generateDevice(username);
+    await ig.simulate.preLoginFlow();
     return await ig.account.login(username, password).catch(async (error) => {
       if (
         error.response &&

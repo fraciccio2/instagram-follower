@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+:root {
+  --green-m: #00ff41;
+  --border-r: 3.6rem;
+}
+
+$green-m: #00ff41;
+$primary: #0d6efd;
+$secondary: #6c757d;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+$theme-colors: (
+        "success": $green-m,
+        "primary": $primary,
+        "secondary": $secondary,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger,
+        "light": $light,
+        "dark": $dark,
+);
+
+@import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
 
 button:disabled {
