@@ -22,6 +22,10 @@ export class LoginFacade {
     this.store.dispatch(LoginActions.login({ username, password }));
   }
 
+  logoutStorage() {
+    this.store.dispatch(LoginActions.logoutStorage());
+  }
+
   logout() {
     this.store.dispatch(LoginActions.logout());
   }

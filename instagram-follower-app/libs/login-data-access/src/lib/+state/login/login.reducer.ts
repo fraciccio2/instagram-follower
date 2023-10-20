@@ -22,7 +22,7 @@ const reducer = createReducer(
     ...state,
     loggedUser,
   })),
-  on(LoginActions.logout, (state) => initialLoginState)
+  on(LoginActions.logoutStorage, (state) => initialLoginState)
 );
 
 export function loginReducer(state: LoginState | undefined, action: Action) {

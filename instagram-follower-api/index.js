@@ -187,7 +187,7 @@ const request = require("request");
 
 const app = express();
 const port = 3000;
-const ig = new IgApiClient();
+let ig = new IgApiClient();
 
 const corsOptions = {
   origin: "http://localhost:5400",
@@ -280,6 +280,38 @@ app.get("/infos", async (req, res) => {
     console.error(e);
     res.status(e.response.statusCode).json({ error: e.message });
   }
+});
+
+app.get("/unfollow-user", async (req, res) => {
+  const pk = req.query.pk;
+  return await ig.friendship
+    .destroy(pk)
+    .then(() =>
+      res
+        .status(200)
+        .json({ message: "Persona smessa di seguire con successo" })
+    )
+    .catch((e) => res.status(e.response.statusCode).json({ error: e.message }));
+});
+
+app.get("/follow-user", async (req, res) => {
+  const pk = req.query.pk;
+  return await ig.friendship
+    .create(pk)
+    .then(() =>
+      res.status(200).json({ message: "Utente seguito con successo" })
+    )
+    .catch((e) => res.status(e.response.statusCode).json({ error: e.message }));
+});
+
+app.get("/logout", async (req, res) => {
+  return await ig.account
+    .logout()
+    .then(() => {
+      ig = new IgApiClient();
+      return res.status(200).json({ message: "Logout avvenuto con successo" });
+    })
+    .catch((e) => res.status(e.response.statusCode).json({ error: e.message }));
 });
 
 app.listen(port, () => {

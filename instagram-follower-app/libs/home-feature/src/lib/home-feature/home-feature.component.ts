@@ -16,7 +16,10 @@ import { HomeShowUsersModalComponent } from 'home-sub-feature';
     [followedNotReturn]="followedNotReturn$ | async"
     [usersIDontFollow]="usersIDontFollow$ | async"
     [usersFollowerViceVersa]="usersFollowerViceVersa$ | async"
-    (showUsersModal)="showUsersModal($event.users, $event.type)"
+    (logout)="logout()"
+    (showUsersModal)="
+      showUsersModal($event.username, $event.users, $event.type)
+    "
   ></home-ui>`,
   styles: [],
 })
@@ -38,15 +41,21 @@ export class HomeFeatureComponent implements OnInit {
     });
   }
 
-  showUsersModal(users: AccountFollowersFeed[], type: UsersTypeEnum) {
+  showUsersModal(
+    username: string,
+    users: AccountFollowersFeed[],
+    type: UsersTypeEnum
+  ) {
     const modal = this.modalService.open(HomeShowUsersModalComponent);
     switch (type) {
       case UsersTypeEnum.FOLLOWER:
         modal.componentInstance.title = 'Utenti che ti seguono';
+        modal.componentInstance.showActionButton = false;
         break;
       case UsersTypeEnum.DONT_FOLLOW:
         modal.componentInstance.title =
           'Utenti che ti seguono e che non ricambi';
+        modal.componentInstance.unfollowUserAction = false;
         break;
       case UsersTypeEnum.FOLLOWING:
         modal.componentInstance.title = 'Utenti che segui';
@@ -59,5 +68,14 @@ export class HomeFeatureComponent implements OnInit {
         break;
     }
     modal.componentInstance.users = users;
+    modal.result.catch((reload) => {
+      if (reload) {
+        this.homeFacade.initProfileInfos(username);
+      }
+    });
+  }
+
+  logout() {
+    this.loginFacade.logout();
   }
 }

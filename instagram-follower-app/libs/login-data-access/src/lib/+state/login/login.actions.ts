@@ -13,4 +13,6 @@ export const setLoggedUserStore = createAction(
   props<{ loggedUser: AccountRepositoryLoginResponseLogged_in_user }>()
 );
 
+export const logoutStorage = createAction('[Login/API] Logout Storage');
+
 export const logout = createAction('[Login/API] Logout');

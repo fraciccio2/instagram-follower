@@ -30,3 +30,13 @@ export const loadUsersImageProfile = createAction(
   '[Home/API] Load Users Image Profile',
   props<{ imagesProfile: Record<string, string> }>()
 );
+
+export const followUser = createAction(
+  '[Home/API] Follow User',
+  props<{ pk: number }>()
+);
+
+export const unfollowUser = createAction(
+  '[Home/API] Unfollow User',
+  props<{ pk: number }>()
+);

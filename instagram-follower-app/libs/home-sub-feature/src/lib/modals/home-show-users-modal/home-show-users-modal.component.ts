@@ -9,7 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     <div class="modal-header">
       <h4 class="modal-title">{{ title }}</h4>
       <button
-        (click)="close()"
+        (click)="dismiss()"
         type="button"
         data-dismiss="modal"
         aria-label="Close"
@@ -45,7 +45,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
         (scrolled)="onScroll()"
       >
         <div
-          *ngFor="let user of showUsers"
+          *ngFor="let user of showUsers; index as i"
           class="d-flex align-items-center mb-3"
         >
           <img
@@ -55,62 +55,24 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
             height="50"
           />
           <div class="d-flex flex-column">
-            <label class="fw-bold mb-1">{{ user.username }}</label>
+            <label class="fw-bold mb-1"
+              >{{ user.username
+              }}<i *ngIf="user.is_private" class="bi bi-lock-fill ms-2"></i
+            ></label>
             {{ user.full_name }}
           </div>
+          <i
+            (click)="$event.stopPropagation(); actionOnUser(i, user.pk)"
+            *ngIf="showActionButton && !hideActionButtonArr[i]"
+            class="bi {{
+              unfollowUserAction ? 'bi-person-dash' : 'bi-person-add'
+            }} ms-auto fs-4 me-1 cursor-pointer"
+          ></i>
         </div>
       </div>
     </div>
   `,
-  styles: [
-    `
-      .modal-header {
-        background-color: black;
-        color: var(--green-m);
-        border-bottom-color: var(--green-m);
-
-        .close {
-          background-color: transparent;
-          border: 0;
-          color: var(--green-m);
-          &:focus-visible {
-            outline: 0 !important;
-          }
-        }
-      }
-
-      .modal-body {
-        background-color: black;
-        color: var(--green-m);
-        .input-group {
-          border: 0;
-          .input-group-text {
-            background-color: #565151;
-            border: 0;
-            &.disabled {
-              background-color: #565151;
-            }
-          }
-          .form-control {
-            background-color: #565151;
-            border: 0;
-            &:focus {
-              box-shadow: none;
-            }
-          }
-        }
-      }
-
-      .data-container {
-        max-height: 400px;
-        overflow: auto;
-
-        .rounded-circle {
-          border: 1px solid var(--green-m);
-        }
-      }
-    `,
-  ],
+  styleUrls: ['./home-show-users-modal.component.scss'],
 })
 export class HomeShowUsersModalComponent implements OnInit {
   private homeFacade = inject(HomeFacade);
@@ -118,8 +80,11 @@ export class HomeShowUsersModalComponent implements OnInit {
 
   @Input() title: string | undefined;
   @Input() users: AccountFollowersFeed[] | undefined;
+  @Input() showActionButton: boolean = true;
+  @Input() unfollowUserAction: boolean = true;
 
   showUsers: AccountFollowersFeed[] = [];
+  hideActionButtonArr: boolean[] = [];
   page = 0;
   numberForLoader = 20;
   filterValue: string | null = null;
@@ -131,8 +96,8 @@ export class HomeShowUsersModalComponent implements OnInit {
     this.scrollNewUsers();
   }
 
-  close() {
-    this.modalService.close();
+  dismiss() {
+    this.modalService.dismiss(!!this.hideActionButtonArr.length);
   }
 
   onScroll() {
@@ -155,6 +120,7 @@ export class HomeShowUsersModalComponent implements OnInit {
     if (this.users && this.filterValue) {
       this.scrollNewUsersFilter(true);
     } else if (!this.filterValue) {
+      this.page = 0;
       this.populateScroll(true);
     }
   }
@@ -198,6 +164,15 @@ export class HomeShowUsersModalComponent implements OnInit {
           link: user.profile_pic_url,
         }))
       );
+    }
+  }
+
+  actionOnUser(index: number, pk: number) {
+    this.hideActionButtonArr[index] = true;
+    if (this.unfollowUserAction) {
+      this.homeFacade.unfollowUser(pk);
+    } else {
+      this.homeFacade.followUser(pk);
     }
   }
 }

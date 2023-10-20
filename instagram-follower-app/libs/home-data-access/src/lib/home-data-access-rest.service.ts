@@ -18,6 +18,20 @@ export class HomeDataAccessRestService {
     });
   }
 
+  followUser(pk: number) {
+    const url = `${this.endpoint}/follow-user`;
+    return this.http.get(url, {
+      params: { pk },
+    });
+  }
+
+  unfollowUser(pk: number) {
+    const url = `${this.endpoint}/unfollow-user`;
+    return this.http.get(url, {
+      params: { pk },
+    });
+  }
+
   getProfileInfos(username: string): Observable<AccountUsersModel> {
     const url = `${this.endpoint}/infos`;
     // return this.http.get<AccountUsersModel>(url, {
@@ -35,7 +49,7 @@ export class HomeDataAccessRestService {
         pk_id: 'dsadadas',
         strong_id__: 'ewrewrwe',
         latest_reel_media: 0,
-        is_private: false,
+        is_private: true,
         is_possible_scammer: false,
         is_verified: false,
         fbid_v2: 'sdfsf',
@@ -74,7 +88,7 @@ export class HomeDataAccessRestService {
             },
           },
           is_possible_scammer: false,
-          is_private: false,
+          is_private: true,
           is_verified: false,
           latest_reel_media: 0,
           profile_pic_id: undefined,

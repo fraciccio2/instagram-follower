@@ -8,6 +8,11 @@
     border-radius: var(--border-r);
     background-color: black;
     color: var(--green-m) !important;
+    cursor: pointer;
+
+    .p-04 {
+      padding: 0.4rem;
+    }
   }
 
   img {

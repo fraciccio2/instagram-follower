@@ -21,7 +21,9 @@ export class HomeUiComponent {
   @Input() followedNotReturn: AccountFollowersFeed[] | undefined | null;
   @Input() usersIDontFollow: AccountFollowersFeed[] | undefined | null;
   @Input() usersFollowerViceVersa: AccountFollowersFeed[] | undefined | null;
+  @Output() logout = new EventEmitter<void>();
   @Output() showUsersModal = new EventEmitter<{
+    username: string;
     users: AccountFollowersFeed[];
     type: UsersTypeEnum;
   }>();

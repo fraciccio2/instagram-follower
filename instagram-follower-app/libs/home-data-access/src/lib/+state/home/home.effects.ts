@@ -84,4 +84,32 @@ export class HomeEffects {
       })
     )
   );
+
+  followUser$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(HomeActions.followUser),
+        switchMap((action) => {
+          this.loaderFacade.startLoader();
+          return this.homeDataAccessRestService
+            .followUser(action.pk)
+            .pipe(endLoader(this.loaderFacade));
+        })
+      ),
+    { dispatch: false }
+  );
+
+  unfollowUser$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(HomeActions.unfollowUser),
+        switchMap((action) => {
+          this.loaderFacade.startLoader();
+          return this.homeDataAccessRestService
+            .unfollowUser(action.pk)
+            .pipe(endLoader(this.loaderFacade));
+        })
+      ),
+    { dispatch: false }
+  );
 }

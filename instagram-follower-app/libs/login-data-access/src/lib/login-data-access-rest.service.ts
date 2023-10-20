@@ -20,4 +20,9 @@ export class LoginDataAccessRestService {
       password,
     });
   }
+
+  logout() {
+    const url = `${this.endpoint}/logout`;
+    return this.http.get(url);
+  }
 }

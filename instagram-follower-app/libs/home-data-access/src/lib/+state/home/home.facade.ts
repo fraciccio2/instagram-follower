@@ -45,4 +45,12 @@ export class HomeFacade {
   initUsersImagesProfile(usersLinks: { username: string; link: string }[]) {
     this.store.dispatch(HomeActions.initUsersImageProfile({ usersLinks }));
   }
+
+  followUser(pk: number) {
+    this.store.dispatch(HomeActions.followUser({ pk }));
+  }
+
+  unfollowUser(pk: number) {
+    this.store.dispatch(HomeActions.unfollowUser({ pk }));
+  }
 }
