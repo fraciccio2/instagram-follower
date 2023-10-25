@@ -201,7 +201,6 @@ app.use(cors(corsOptions));
 app.post("/login", async (req, res) => {
   const logOnInstagram = async (username, password) => {
     ig.state.generateDevice(username);
-    await ig.simulate.preLoginFlow();
     return await ig.account.login(username, password).catch(async (error) => {
       if (
         error.response &&
@@ -312,6 +311,41 @@ app.get("/logout", async (req, res) => {
       return res.status(200).json({ message: "Logout avvenuto con successo" });
     })
     .catch((e) => res.status(e.response.statusCode).json({ error: e.message }));
+});
+
+app.get("/get-stories", async (req, res) => {
+  const pk = req.query.pk;
+  const reelsFeed = ig.feed.reelsMedia({
+    userIds: [pk],
+  });
+  try {
+    const storyItems = await reelsFeed.items();
+    return res.status(200).json(storyItems);
+  } catch (e) {
+    return res.status(e.response.statusCode).json({ error: e.message });
+  }
+});
+
+app.get("/user", async (req, res) => {
+  const pk = req.query.pk;
+  try {
+    const user = await ig.user.info(pk);
+    return res.status(200).json({
+      user,
+    });
+  } catch (e) {
+    return res.status(e.response.statusCode).json({ error: e.message });
+  }
+});
+
+app.get("/search", async (req, res) => {
+  const value = req.query.value;
+  try {
+    const results = await ig.user.search(value);
+    return res.status(200).json(results);
+  } catch (e) {
+    return res.status(e.response.statusCode).json({ error: e.message });
+  }
 });
 
 app.listen(port, () => {
