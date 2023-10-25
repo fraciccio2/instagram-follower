@@ -313,7 +313,7 @@ app.get("/logout", async (req, res) => {
     .catch((e) => res.status(e.response.statusCode).json({ error: e.message }));
 });
 
-app.get("/get-stories", async (req, res) => {
+app.get("/stories", async (req, res) => {
   const pk = req.query.pk;
   const reelsFeed = ig.feed.reelsMedia({
     userIds: [pk],
@@ -330,9 +330,7 @@ app.get("/user", async (req, res) => {
   const pk = req.query.pk;
   try {
     const user = await ig.user.info(pk);
-    return res.status(200).json({
-      user,
-    });
+    return res.status(200).json(user);
   } catch (e) {
     return res.status(e.response.statusCode).json({ error: e.message });
   }
