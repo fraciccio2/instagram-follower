@@ -1,5 +1,5 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { HOME_FEATURE_KEY, HomeState } from './home.reducer';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {HOME_FEATURE_KEY, HomeState} from './home.reducer';
 
 // Lookup the 'Home' feature state managed by NgRx
 export const selectHomeState =
@@ -49,4 +49,14 @@ export const getUsersImageProfiles = createSelector(
 export const getUsersImageProfilesLoading = createSelector(
   selectHomeState,
   (state: HomeState) => state.loadingUsersImageProfile
+);
+
+export const getUsersSearched = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.userObj
+);
+
+export const getUser = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.user
 );

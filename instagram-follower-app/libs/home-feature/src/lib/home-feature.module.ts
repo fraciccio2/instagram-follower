@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeFeatureComponent } from './home-feature/home-feature.component';
+import { HomeFeatureComponent, HomeUserFeatureComponent } from './components';
 import { HomeUiModule } from 'home-ui';
 import { RouterModule } from '@angular/router';
 import { LoggedUserGuard } from 'ng';
 import { HomeDataAccessModule } from 'home-data-access';
 import { HomeFeatureGuard } from './home-feature.guard';
+import { HomeUserFeatureGuard } from './home-user-feature.guard';
 
 @NgModule({
   imports: [
@@ -16,11 +17,16 @@ import { HomeFeatureGuard } from './home-feature.guard';
         component: HomeFeatureComponent,
         canActivate: [LoggedUserGuard, HomeFeatureGuard],
       },
+      {
+        path: 'home/:id',
+        component: HomeUserFeatureComponent,
+        canActivate: [LoggedUserGuard, HomeUserFeatureGuard],
+      },
     ]),
     HomeUiModule,
     HomeDataAccessModule,
   ],
-  declarations: [HomeFeatureComponent],
-  exports: [HomeFeatureComponent],
+  declarations: [HomeFeatureComponent, HomeUserFeatureComponent],
+  exports: [HomeFeatureComponent, HomeUserFeatureComponent],
 })
 export class HomeFeatureModule {}

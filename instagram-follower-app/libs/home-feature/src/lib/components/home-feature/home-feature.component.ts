@@ -5,7 +5,10 @@ import { HomeFacade } from 'home-data-access';
 import { filterNullish } from 'ng';
 import { AccountFollowersFeed, UsersTypeEnum } from 'home-util';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HomeShowUsersModalComponent } from 'home-sub-feature';
+import {
+  HomeSearchUsersModalComponent,
+  HomeShowUsersModalComponent,
+} from 'home-sub-feature';
 
 @Component({
   selector: 'home-feature',
@@ -17,6 +20,7 @@ import { HomeShowUsersModalComponent } from 'home-sub-feature';
     [usersIDontFollow]="usersIDontFollow$ | async"
     [usersFollowerViceVersa]="usersFollowerViceVersa$ | async"
     (logout)="logout()"
+    (searchUsersModal)="searchUsersModal()"
     (showUsersModal)="
       showUsersModal($event.username, $event.users, $event.type)
     "
@@ -77,5 +81,9 @@ export class HomeFeatureComponent implements OnInit {
 
   logout() {
     this.loginFacade.logout();
+  }
+
+  searchUsersModal() {
+    const modal = this.modalService.open(HomeSearchUsersModalComponent);
   }
 }

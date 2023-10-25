@@ -1,7 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { AccountFollowersFeed, AccountUsersModel } from 'home-util';
+import {
+  AccountFollowersFeed,
+  AccountUsersModel,
+  UserRepositoryInfoResponseUser,
+  UserRepositorySearchResponseRootObject,
+} from 'home-util';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +33,22 @@ export class HomeDataAccessRestService {
   unfollowUser(pk: number) {
     const url = `${this.endpoint}/unfollow-user`;
     return this.http.get(url, {
+      params: { pk },
+    });
+  }
+
+  searchUsers(
+    value: string
+  ): Observable<UserRepositorySearchResponseRootObject> {
+    const url = `${this.endpoint}/search`;
+    return this.http.get<UserRepositorySearchResponseRootObject>(url, {
+      params: { value },
+    });
+  }
+
+  getUser(pk: number): Observable<UserRepositoryInfoResponseUser> {
+    const url = `${this.endpoint}/user`;
+    return this.http.get<UserRepositoryInfoResponseUser>(url, {
       params: { pk },
     });
   }

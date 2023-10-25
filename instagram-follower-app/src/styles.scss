@@ -37,3 +37,71 @@ button:disabled {
 .cursor-pointer {
   cursor: pointer !important;
 }
+
+.modal-header {
+  background-color: black;
+  color: var(--green-m);
+  border-bottom-color: var(--green-m);
+
+  .close {
+    background-color: transparent;
+    border: 0;
+    color: var(--green-m);
+
+    &:focus-visible {
+      outline: 0 !important;
+    }
+  }
+}
+
+.modal-body {
+  background-color: black;
+  color: var(--green-m);
+
+  .search.input-group {
+    border: 0;
+
+    .input-group-text {
+      background-color: #565151;
+      border: 0;
+
+      &.disabled {
+        background-color: #565151;
+      }
+    }
+
+    .form-control {
+      background-color: #565151;
+      border: 0;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .data-container {
+    max-height: 400px;
+    overflow: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #565151 #f1f1f1;
+
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #565151;
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .rounded-circle {
+      border: 1px solid var(--green-m);
+    }
+  }
+}

@@ -112,4 +112,45 @@ export class HomeEffects {
       ),
     { dispatch: false }
   );
+
+  initSearchUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initSearchUsers),
+      switchMap((action) => {
+        this.loaderFacade.startLoader();
+        return this.homeDataAccessRestService.searchUsers(action.value).pipe(
+          map((userObj) => {
+            const usersLinks = userObj.users.map((user) => ({
+              username: user.username,
+              link: user.profile_pic_url,
+            }));
+            this.store.dispatch(
+              HomeActions.initUsersImageProfile({ usersLinks })
+            );
+            return HomeActions.loadSearchUsers({
+              userObj,
+            });
+          }),
+          endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
+
+  initUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initUser),
+      switchMap((action) => {
+        this.loaderFacade.startLoader();
+        return this.homeDataAccessRestService.getUser(action.pk).pipe(
+          map((user) =>
+            HomeActions.loadUser({
+              user,
+            })
+          ),
+          endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
 }

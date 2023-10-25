@@ -19,7 +19,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
       </button>
     </div>
     <div class="modal-body">
-      <div class="input-group mb-3">
+      <div class="search input-group mb-3">
         <span class="input-group-text" [ngClass]="{ disabled: !users?.length }"
           ><i class="bi bi-search"></i
         ></span>
@@ -72,7 +72,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
       </div>
     </div>
   `,
-  styleUrls: ['./home-show-users-modal.component.scss'],
+  styles: [],
 })
 export class HomeShowUsersModalComponent implements OnInit {
   private homeFacade = inject(HomeFacade);

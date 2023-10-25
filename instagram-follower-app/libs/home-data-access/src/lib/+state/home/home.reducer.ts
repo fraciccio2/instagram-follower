@@ -1,7 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
 import * as HomeActions from './home.actions';
-import { AccountUsersModel } from 'home-util';
+import {
+  AccountUsersModel,
+  UserRepositoryInfoResponseUser,
+  UserRepositorySearchResponseRootObject,
+} from 'home-util';
 
 export const HOME_FEATURE_KEY = 'home';
 
@@ -10,6 +14,8 @@ export interface HomeState {
   imagesProfile: Record<string, string>;
   infos?: AccountUsersModel;
   loadingUsersImageProfile: boolean;
+  userObj?: UserRepositorySearchResponseRootObject;
+  user?: UserRepositoryInfoResponseUser;
 }
 
 export interface HomePartialState {
@@ -41,6 +47,14 @@ const reducer = createReducer(
   on(HomeActions.loadProfileInfos, (state, { infos }) => ({
     ...state,
     infos,
+  })),
+  on(HomeActions.loadSearchUsers, (state, { userObj }) => ({
+    ...state,
+    userObj,
+  })),
+  on(HomeActions.loadUser, (state, { user }) => ({
+    ...state,
+    user,
   }))
 );
 

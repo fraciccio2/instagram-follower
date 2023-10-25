@@ -1,5 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { AccountUsersModel } from 'home-util';
+import {
+  AccountUsersModel,
+  UserRepositoryInfoResponseUser,
+  UserRepositorySearchResponseRootObject,
+} from 'home-util';
 
 export const initImageProfile = createAction(
   '[Home/API] Init Image Profile',
@@ -39,4 +43,24 @@ export const followUser = createAction(
 export const unfollowUser = createAction(
   '[Home/API] Unfollow User',
   props<{ pk: number }>()
+);
+
+export const initSearchUsers = createAction(
+  '[Home/API] Init Search Users',
+  props<{ value: string }>()
+);
+
+export const loadSearchUsers = createAction(
+  '[Home/API] Load Search Users',
+  props<{ userObj: UserRepositorySearchResponseRootObject }>()
+);
+
+export const initUser = createAction(
+  '[Home/API] Init User',
+  props<{ pk: number }>()
+);
+
+export const loadUser = createAction(
+  '[Home/API] Load Users',
+  props<{ user: UserRepositoryInfoResponseUser }>()
 );

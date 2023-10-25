@@ -29,6 +29,8 @@ export class HomeFacade {
   usersFollowerViceVersa$ = this.store.pipe(
     select(HomeSelectors.getUsersFollowViceVersa)
   );
+  usersSearched$ = this.store.pipe(select(HomeSelectors.getUsersSearched));
+  user$ = this.store.pipe(select(HomeSelectors.getUser));
 
   /**
    * Use the initialization action to perform one
@@ -52,5 +54,13 @@ export class HomeFacade {
 
   unfollowUser(pk: number) {
     this.store.dispatch(HomeActions.unfollowUser({ pk }));
+  }
+
+  searchUsers(value: string) {
+    this.store.dispatch(HomeActions.initSearchUsers({ value }));
+  }
+
+  initUser(pk: number) {
+    this.store.dispatch(HomeActions.initUser({ pk }));
   }
 }
