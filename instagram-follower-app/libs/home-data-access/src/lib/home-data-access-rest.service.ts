@@ -51,6 +51,23 @@ export class HomeDataAccessRestService {
     return this.http.get<UserRepositoryInfoResponseUser>(url, {
       params: { pk },
     });
+    // return of({
+    //   full_name: 'Francesco Giacomazzo',
+    //   username: 'francescogiacomazzo1',
+    //   biography: 'Unict \n Caltagirone'.replace('\n', '<br>'),
+    //   follower_count: 2458,
+    //   following_count: 254,
+    //   media_count: 12,
+    //   is_private: true,
+    //   is_verified: true,
+    // } as any);
+  }
+
+  getStories(pk: number): Observable<any> {
+    const url = `${this.endpoint}/stories`;
+    return this.http.get<any>(url, {
+      params: { pk },
+    });
   }
 
   getProfileInfos(username: string): Observable<AccountUsersModel> {

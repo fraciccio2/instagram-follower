@@ -1,0 +1,46 @@
+.container-home-user {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  color: var(--green-m);
+
+  .bi-patch-check-fill {
+    color: #0d6efd;
+  }
+
+  .rounded-circle {
+    width: 7rem;
+    height: 7rem;
+    border: 3px solid var(--green-m) !important;
+
+    &.stories {
+      width: 5rem;
+      height: 5rem;
+      border: 2px solid var(--green-m) !important;
+    }
+  }
+}
+
+@media (max-width: 756px) {
+  .vh-100 {
+    font-size: 13px;
+
+    .rounded-circle {
+      width: 5rem;
+      height: 5rem;
+      border: 2px solid var(--green-m) !important;
+
+      &.stories {
+        width: 3.5rem;
+        height: 3.5rem;
+        border: 1px solid var(--green-m) !important;
+      }
+    }
+  }
+}

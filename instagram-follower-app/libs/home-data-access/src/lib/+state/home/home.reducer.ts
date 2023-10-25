@@ -16,6 +16,7 @@ export interface HomeState {
   loadingUsersImageProfile: boolean;
   userObj?: UserRepositorySearchResponseRootObject;
   user?: UserRepositoryInfoResponseUser;
+  stories?: any;
 }
 
 export interface HomePartialState {
@@ -55,6 +56,10 @@ const reducer = createReducer(
   on(HomeActions.loadUser, (state, { user }) => ({
     ...state,
     user,
+  })),
+  on(HomeActions.loadStories, (state, { stories }) => ({
+    ...state,
+    stories,
   }))
 );
 

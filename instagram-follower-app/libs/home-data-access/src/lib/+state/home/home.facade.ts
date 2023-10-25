@@ -31,6 +31,7 @@ export class HomeFacade {
   );
   usersSearched$ = this.store.pipe(select(HomeSelectors.getUsersSearched));
   user$ = this.store.pipe(select(HomeSelectors.getUser));
+  stories$ = this.store.pipe(select(HomeSelectors.getStories));
 
   /**
    * Use the initialization action to perform one
@@ -62,5 +63,9 @@ export class HomeFacade {
 
   initUser(pk: number) {
     this.store.dispatch(HomeActions.initUser({ pk }));
+  }
+
+  initStories(pk: number) {
+    this.store.dispatch(HomeActions.initStories({ pk }));
   }
 }

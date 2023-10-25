@@ -60,3 +60,8 @@ export const getUser = createSelector(
   selectHomeState,
   (state: HomeState) => state.user
 );
+
+export const getStories = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.stories
+);

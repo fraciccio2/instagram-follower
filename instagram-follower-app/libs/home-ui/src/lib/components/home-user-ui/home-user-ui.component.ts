@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  AccountFollowersFeed,
-  AccountUsersModel,
-  UsersTypeEnum,
-} from 'home-util';
+import { UserRepositoryInfoResponseUser } from 'home-util';
 
 @Component({
   selector: 'home-user-ui',
@@ -11,12 +7,7 @@ import {
   styleUrls: ['./home-user-ui.component.scss'],
 })
 export class HomeUserUiComponent {
-  @Input() user: AccountFollowersFeed | undefined | null;
+  @Input() user: UserRepositoryInfoResponseUser | undefined | null;
   @Input() userImageProfile: string | undefined | null;
-  @Input() userInfos: AccountUsersModel | undefined | null;
-  @Output() showUsersModal = new EventEmitter<{
-    username: string;
-    users: AccountFollowersFeed[];
-    type: UsersTypeEnum;
-  }>();
+  @Output() seeStories = new EventEmitter<number>();
 }

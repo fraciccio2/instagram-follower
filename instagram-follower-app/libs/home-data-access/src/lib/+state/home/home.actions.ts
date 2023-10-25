@@ -64,3 +64,13 @@ export const loadUser = createAction(
   '[Home/API] Load Users',
   props<{ user: UserRepositoryInfoResponseUser }>()
 );
+
+export const initStories = createAction(
+  '[Home/API] Init Stories',
+  props<{ pk: number }>()
+);
+
+export const loadStories = createAction(
+  '[Home/API] Load Stories',
+  props<{ stories: any }>()
+);

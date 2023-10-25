@@ -143,9 +143,27 @@ export class HomeEffects {
       switchMap((action) => {
         this.loaderFacade.startLoader();
         return this.homeDataAccessRestService.getUser(action.pk).pipe(
-          map((user) =>
-            HomeActions.loadUser({
+          map((user) => {
+            debugger;
+            return HomeActions.loadUser({
               user,
+            });
+          }),
+          endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
+
+  initStories$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initStories),
+      switchMap((action) => {
+        this.loaderFacade.startLoader();
+        return this.homeDataAccessRestService.getStories(action.pk).pipe(
+          map((stories) =>
+            HomeActions.loadStories({
+              stories,
             })
           ),
           endLoader(this.loaderFacade)
