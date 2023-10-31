@@ -1,0 +1,12 @@
+.btn-close {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  display: none;
+}
+
+@media (max-width: 756px) {
+  .btn-close {
+    display: block !important;
+  }
+}

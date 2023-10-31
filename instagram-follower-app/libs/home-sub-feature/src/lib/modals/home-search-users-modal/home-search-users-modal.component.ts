@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HomeFacade } from 'home-data-access';
 import { Router } from '@angular/router';
@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
           type="text"
           class="form-control"
           placeholder="Cerca utente (min. 3 caratteri)"
+          autocomplete="off"
           name="searchUser"
           ngModel
           #searchUser="ngModel"
@@ -60,13 +61,17 @@ import { Router } from '@angular/router';
   `,
   styles: [],
 })
-export class HomeSearchUsersModalComponent {
+export class HomeSearchUsersModalComponent implements OnDestroy {
   private modalService = inject(NgbActiveModal);
   private homeFacade = inject(HomeFacade);
   private router = inject(Router);
 
   usersSearched$ = this.homeFacade.usersSearched$;
   imagesProfiles$ = this.homeFacade.imagesProfiles$;
+
+  ngOnDestroy() {
+    this.homeFacade.resetSearchedUsers();
+  }
 
   dismiss() {
     this.modalService.dismiss();
@@ -80,5 +85,6 @@ export class HomeSearchUsersModalComponent {
 
   openUserPage(pk: number) {
     this.router.navigate(['./home/' + pk]).catch((e) => console.error(e));
+    this.modalService.close();
   }
 }

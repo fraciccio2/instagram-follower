@@ -1,0 +1,27 @@
+<ng-container *ngIf="stories && stories.length; else noStories">
+  <ng-container *ngIf="stories[activeIndex]?.video_versions; else image">
+    <video
+      class="vh-100"
+      autoplay
+      loop
+      controls
+      *ngIf="loadedUrl"
+      (click)="$event.stopPropagation()"
+    >
+      <source [src]="urlToUse" type="video/mp4" />
+    </video>
+    <button class="btn btn-close"><i class="bi bi-x"></i></button>
+  </ng-container>
+  <ng-template #image>
+    <img
+      *ngIf="loadedUrl"
+      [src]="urlToUse"
+      class="vh-100"
+      (click)="$event.stopPropagation()"
+    />
+    <button class="btn btn-close"><i class="bi bi-x"></i></button>
+  </ng-template>
+</ng-container>
+<ng-template #noStories>
+  <div class="alert alert-warning">Non ci sono storie</div>
+</ng-template>

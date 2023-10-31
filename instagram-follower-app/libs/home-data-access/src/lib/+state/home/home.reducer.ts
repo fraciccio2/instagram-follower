@@ -3,6 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as HomeActions from './home.actions';
 import {
   AccountUsersModel,
+  ReelsMediaFeedResponseItem,
   UserRepositoryInfoResponseUser,
   UserRepositorySearchResponseRootObject,
 } from 'home-util';
@@ -16,7 +17,8 @@ export interface HomeState {
   loadingUsersImageProfile: boolean;
   userObj?: UserRepositorySearchResponseRootObject;
   user?: UserRepositoryInfoResponseUser;
-  stories?: any;
+  stories?: ReelsMediaFeedResponseItem[];
+  userImageProfile?: string;
 }
 
 export interface HomePartialState {
@@ -28,6 +30,7 @@ export const initialHomeState: HomeState = {
   infos: undefined,
   imagesProfile: {},
   loadingUsersImageProfile: false,
+  userImageProfile: undefined,
 };
 
 const reducer = createReducer(
@@ -60,6 +63,18 @@ const reducer = createReducer(
   on(HomeActions.loadStories, (state, { stories }) => ({
     ...state,
     stories,
+  })),
+  on(HomeActions.loadUserImageProfile, (state, { userImageProfile }) => ({
+    ...state,
+    userImageProfile,
+  })),
+  on(HomeActions.resetSearchedUsers, (state) => ({
+    ...state,
+    userObj: undefined,
+  })),
+  on(HomeActions.resetUser, (state) => ({
+    ...state,
+    user: undefined,
   }))
 );
 

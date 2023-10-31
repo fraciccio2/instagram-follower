@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeUiComponent, HomeUserUiComponent } from './components';
+import {
+  HomeStoryViewerUiComponent,
+  HomeUiComponent,
+  HomeUserUiComponent,
+} from './components';
 import { LoginUiModule } from 'login-ui';
+import { NgBaseModule } from 'ng';
 
 @NgModule({
-  imports: [CommonModule, LoginUiModule],
-  declarations: [HomeUiComponent, HomeUserUiComponent],
-  exports: [HomeUiComponent, HomeUserUiComponent],
+  imports: [CommonModule, LoginUiModule, NgBaseModule],
+  declarations: [
+    HomeUiComponent,
+    HomeUserUiComponent,
+    HomeStoryViewerUiComponent,
+  ],
+  exports: [HomeUiComponent, HomeUserUiComponent, HomeStoryViewerUiComponent],
 })
 export class HomeUiModule {}

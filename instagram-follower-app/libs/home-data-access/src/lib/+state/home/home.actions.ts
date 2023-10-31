@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import {
   AccountUsersModel,
+  ReelsMediaFeedResponseItem,
   UserRepositoryInfoResponseUser,
   UserRepositorySearchResponseRootObject,
 } from 'home-util';
@@ -72,5 +73,21 @@ export const initStories = createAction(
 
 export const loadStories = createAction(
   '[Home/API] Load Stories',
-  props<{ stories: any }>()
+  props<{ stories: ReelsMediaFeedResponseItem[] }>()
 );
+
+export const initUserImageProfile = createAction(
+  '[Home/API] Init User Image Profile',
+  props<{ link: string }>()
+);
+
+export const loadUserImageProfile = createAction(
+  '[Home/API] Load User Image Profile',
+  props<{ userImageProfile: string }>()
+);
+
+export const resetSearchedUsers = createAction(
+  '[Home/API] Reset Searched Users'
+);
+
+export const resetUser = createAction('[Home/API] Reset User');

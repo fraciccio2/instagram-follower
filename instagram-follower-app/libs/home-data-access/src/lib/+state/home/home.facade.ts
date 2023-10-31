@@ -32,6 +32,9 @@ export class HomeFacade {
   usersSearched$ = this.store.pipe(select(HomeSelectors.getUsersSearched));
   user$ = this.store.pipe(select(HomeSelectors.getUser));
   stories$ = this.store.pipe(select(HomeSelectors.getStories));
+  userImageProfile$ = this.store.pipe(
+    select(HomeSelectors.getUserImageProfile)
+  );
 
   /**
    * Use the initialization action to perform one
@@ -67,5 +70,17 @@ export class HomeFacade {
 
   initStories(pk: number) {
     this.store.dispatch(HomeActions.initStories({ pk }));
+  }
+
+  initUserImageProfile(link: string) {
+    this.store.dispatch(HomeActions.initUserImageProfile({ link }));
+  }
+
+  resetSearchedUsers() {
+    this.store.dispatch(HomeActions.resetSearchedUsers());
+  }
+
+  resetUser() {
+    this.store.dispatch(HomeActions.resetUser());
   }
 }

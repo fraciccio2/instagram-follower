@@ -38,6 +38,10 @@ button:disabled {
   cursor: pointer !important;
 }
 
+.modal-content {
+  border: 1px solid var(--green-m);
+}
+
 .modal-header {
   background-color: black;
   color: var(--green-m);
@@ -57,6 +61,8 @@ button:disabled {
 .modal-body {
   background-color: black;
   color: var(--green-m);
+  border-bottom-left-radius: var(--bs-modal-border-radius);
+  border-bottom-right-radius: var(--bs-modal-border-radius);
 
   .search.input-group {
     border: 0;

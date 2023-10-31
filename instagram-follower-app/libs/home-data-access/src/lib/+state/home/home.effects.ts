@@ -143,12 +143,11 @@ export class HomeEffects {
       switchMap((action) => {
         this.loaderFacade.startLoader();
         return this.homeDataAccessRestService.getUser(action.pk).pipe(
-          map((user) => {
-            debugger;
-            return HomeActions.loadUser({
+          map((user) =>
+            HomeActions.loadUser({
               user,
-            });
-          }),
+            })
+          ),
           endLoader(this.loaderFacade)
         );
       })
@@ -166,6 +165,24 @@ export class HomeEffects {
               stories,
             })
           ),
+          endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
+
+  initUserImageProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initUserImageProfile),
+      switchMap((action) => {
+        this.loaderFacade.startLoader();
+        return this.homeDataAccessRestService.getImageProfile(action.link).pipe(
+          map((userImageProfile) => {
+            const createURL = URL.createObjectURL(userImageProfile);
+            return HomeActions.loadUserImageProfile({
+              userImageProfile: createURL,
+            });
+          }),
           endLoader(this.loaderFacade)
         );
       })

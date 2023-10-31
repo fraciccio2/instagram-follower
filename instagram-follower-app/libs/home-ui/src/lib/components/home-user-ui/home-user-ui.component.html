@@ -2,20 +2,23 @@
   <div class="container-home-user">
     <div class="vh-100 w-100">
       <div class="container" *ngIf="user">
+        <div class="position-absolute return-back">
+          <button class="btn border-0 p-0 d-flex" (click)="returnBack.emit()">
+            <i class="bi bi-chevron-left me-1"></i>
+            <div class="hidden-text">Torna indietro</div>
+          </button>
+        </div>
         <div class="d-flex justify-content-center mt-2">
           {{ user.username }}
           <i class="ms-2 bi bi-patch-check-fill" *ngIf="user.is_verified"></i>
         </div>
         <div class="d-flex justify-content-between align-items-center mt-4">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDJzEaxLN-jGRYYUO65pWu7Q9GXoNt4LUSSA&usqp=CAU"
+            *ngIf="userImageProfile"
+            [src]="userImageProfile"
             class="rounded-circle"
+            (click)="openHdProfileImage.emit(user.hd_profile_pic_url_info.url)"
           />
-          <!--          <img-->
-          <!--            *ngIf="userImageProfile"-->
-          <!--            [src]="userImageProfile"-->
-          <!--            class="rounded-circle"-->
-          <!--          />-->
           <div class="group d-flex">
             <div class="d-block me-5 text-center">
               {{ user.media_count }}
@@ -33,16 +36,42 @@
         </div>
         <div class="mt-4">
           <label class="fw-bold">{{ user.full_name }}</label>
-          <div class="mt-2" [innerHTML]="user.biography"></div>
+          <div class="mt-2" [innerHTML]="user.biography | space"></div>
         </div>
         <div class="mt-4 d-flex align-items-center">
           <img
             (click)="seeStories.emit(user.pk)"
-            src="https://static.vecteezy.com/system/resources/previews/023/986/555/original/instagram-logo-instagram-logo-transparent-instagram-icon-transparent-free-free-png.png"
+            src="assets/img/instagram-logo.webp"
             class="rounded-circle stories cursor-pointer"
           />
           <div class="fw-bold ms-3">Guarda le storie di questo utente</div>
         </div>
+      </div>
+      <div
+        class="overlay-story h-100 w-100 d-flex justify-content-center align-items-center"
+        *ngIf="showStories"
+        (click)="closeStory.emit()"
+      >
+        <button
+          *ngIf="stories"
+          class="btn border-0 me-3 l"
+          (click)="$event.stopPropagation(); changeStory.emit(false)"
+          [disabled]="activeIndex === 0"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <home-story-viewer-ui
+          [stories]="stories"
+          [activeIndex]="activeIndex"
+        ></home-story-viewer-ui>
+        <button
+          *ngIf="stories"
+          class="btn border-0 ms-3 r"
+          (click)="$event.stopPropagation(); changeStory.emit(true)"
+          [disabled]="activeIndex === stories.length - 1"
+        >
+          <i class="bi bi-chevron-right"></i>
+        </button>
       </div>
     </div>
   </div>

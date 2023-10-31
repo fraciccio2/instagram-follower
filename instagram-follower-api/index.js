@@ -231,6 +231,12 @@ app.get("/proxy-image", (req, res) => {
   request(imageUrl).pipe(res);
 });
 
+app.get("/proxy-video", (req, res) => {
+  const videoUrl = req.query.videoUrl;
+  res.header("Access-Control-Allow-Origin", "*");
+  request.get(videoUrl).pipe(res);
+});
+
 app.get("/infos", async (req, res) => {
   const username = req.query.username;
   try {

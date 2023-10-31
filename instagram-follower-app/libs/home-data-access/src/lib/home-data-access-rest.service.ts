@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import {
   AccountFollowersFeed,
   AccountUsersModel,
+  ReelsMediaFeedResponseItem,
   UserRepositoryInfoResponseUser,
   UserRepositorySearchResponseRootObject,
 } from 'home-util';
@@ -63,81 +64,81 @@ export class HomeDataAccessRestService {
     // } as any);
   }
 
-  getStories(pk: number): Observable<any> {
+  getStories(pk: number): Observable<ReelsMediaFeedResponseItem[]> {
     const url = `${this.endpoint}/stories`;
-    return this.http.get<any>(url, {
+    return this.http.get<ReelsMediaFeedResponseItem[]>(url, {
       params: { pk },
     });
   }
 
   getProfileInfos(username: string): Observable<AccountUsersModel> {
     const url = `${this.endpoint}/infos`;
-    // return this.http.get<AccountUsersModel>(url, {
-    //   params: { username },
-    // });
-    const followers: AccountFollowersFeed[] = [];
-    for (let i = 0; i < 200; i++) {
-      const name = Math.random().toString(36).substring(2, 7);
-      followers.push({
-        full_name: name,
-        username: name,
-        profile_pic_url: 'sdfsdf',
-        third_party_downloads_enabled: 0,
-        pk: 5544252,
-        pk_id: 'dsadadas',
-        strong_id__: 'ewrewrwe',
-        latest_reel_media: 0,
-        is_private: true,
-        is_possible_scammer: false,
-        is_verified: false,
-        fbid_v2: 'sdfsf',
-        has_anonymous_profile_picture: false,
-        account_badge: [],
-        is_possible_bad_actor: {
-          is_possible_impersonator: {
-            connected_similar_user_id: null,
-            is_unconnected_impersonator: false,
-          },
-          is_possible_scammer: false,
-          is_possible_impersonator_threads: {
-            connected_similar_user_id: null,
-            is_unconnected_impersonator: false,
-          },
-        },
-      });
-    }
-    return of({
-      followers,
-      following: [
-        {
-          account_badge: [],
-          fbid_v2: 'dsfsd',
-          full_name: 'ciro',
-          has_anonymous_profile_picture: false,
-          is_possible_bad_actor: {
-            is_possible_impersonator: {
-              connected_similar_user_id: null,
-              is_unconnected_impersonator: false,
-            },
-            is_possible_scammer: false,
-            is_possible_impersonator_threads: {
-              connected_similar_user_id: null,
-              is_unconnected_impersonator: false,
-            },
-          },
-          is_possible_scammer: false,
-          is_private: true,
-          is_verified: false,
-          latest_reel_media: 0,
-          profile_pic_id: undefined,
-          pk_id: 'sdfdsf',
-          username: 'ciro32',
-          profile_pic_url: 'dasda',
-          strong_id__: 'dasda',
-          pk: 32423423,
-          third_party_downloads_enabled: 0,
-        },
-      ],
+    return this.http.get<AccountUsersModel>(url, {
+      params: { username },
     });
+    // const followers: AccountFollowersFeed[] = [];
+    // for (let i = 0; i < 200; i++) {
+    //   const name = Math.random().toString(36).substring(2, 7);
+    //   followers.push({
+    //     full_name: name,
+    //     username: name,
+    //     profile_pic_url: 'sdfsdf',
+    //     third_party_downloads_enabled: 0,
+    //     pk: 5544252,
+    //     pk_id: 'dsadadas',
+    //     strong_id__: 'ewrewrwe',
+    //     latest_reel_media: 0,
+    //     is_private: true,
+    //     is_possible_scammer: false,
+    //     is_verified: false,
+    //     fbid_v2: 'sdfsf',
+    //     has_anonymous_profile_picture: false,
+    //     account_badge: [],
+    //     is_possible_bad_actor: {
+    //       is_possible_impersonator: {
+    //         connected_similar_user_id: null,
+    //         is_unconnected_impersonator: false,
+    //       },
+    //       is_possible_scammer: false,
+    //       is_possible_impersonator_threads: {
+    //         connected_similar_user_id: null,
+    //         is_unconnected_impersonator: false,
+    //       },
+    //     },
+    //   });
+    // }
+    // return of({
+    //   followers,
+    //   following: [
+    //     {
+    //       account_badge: [],
+    //       fbid_v2: 'dsfsd',
+    //       full_name: 'ciro',
+    //       has_anonymous_profile_picture: false,
+    //       is_possible_bad_actor: {
+    //         is_possible_impersonator: {
+    //           connected_similar_user_id: null,
+    //           is_unconnected_impersonator: false,
+    //         },
+    //         is_possible_scammer: false,
+    //         is_possible_impersonator_threads: {
+    //           connected_similar_user_id: null,
+    //           is_unconnected_impersonator: false,
+    //         },
+    //       },
+    //       is_possible_scammer: false,
+    //       is_private: true,
+    //       is_verified: false,
+    //       latest_reel_media: 0,
+    //       profile_pic_id: undefined,
+    //       pk_id: 'sdfdsf',
+    //       username: 'ciro32',
+    //       profile_pic_url: 'dasda',
+    //       strong_id__: 'dasda',
+    //       pk: 32423423,
+    //       third_party_downloads_enabled: 0,
+    //     },
+    //   ],
+    // });
   }
 }
