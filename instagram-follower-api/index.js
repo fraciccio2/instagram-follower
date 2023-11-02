@@ -188,6 +188,7 @@ const request = require("request");
 const app = express();
 const port = 3000;
 let ig = new IgApiClient();
+let accountsFeed = undefined;
 
 const corsOptions = {
   origin: "http://localhost:5400",
@@ -292,9 +293,7 @@ app.get("/unfollow-user", async (req, res) => {
   return await ig.friendship
     .destroy(pk)
     .then(() =>
-      res
-        .status(200)
-        .json({ message: "Persona smessa di seguire con successo" })
+      res.status(200).json({ message: "Utente smesso di seguire con successo" })
     )
     .catch((e) => res.status(e.response.statusCode).json({ error: e.message }));
 });
@@ -348,6 +347,87 @@ app.get("/search", async (req, res) => {
     const results = await ig.user.search(value);
     return res.status(200).json(results);
   } catch (e) {
+    return res.status(e.response.statusCode).json({ error: e.message });
+  }
+});
+
+app.post("/user-infos", async (req, res) => {
+  const { pk, query, followers, page } = req.body;
+  try {
+    const getAccount = () => {
+      if (followers) {
+        accountsFeed = ig.feed.accountFollowers({ id: pk, query });
+        return accountsFeed
+          .items()
+          .then((items) => res.status(200).json(items))
+          .catch((e) =>
+            res.status(e.response.statusCode).json({ error: e.message })
+          );
+      } else {
+        accountsFeed = ig.feed.accountFollowing({ id: pk, query });
+        return accountsFeed
+          .items()
+          .then((items) => res.status(200).json(items))
+          .catch((e) =>
+            res.status(e.response.statusCode).json({ error: e.message })
+          );
+      }
+    };
+    if (!accountsFeed) {
+      await getAccount();
+    } else if (accountsFeed && accountsFeed.id === pk) {
+      if (page > 1) {
+        if (accountsFeed.isMoreAvailable()) {
+          return await accountsFeed
+            .items()
+            .then((items) => res.status(200).json(items))
+            .catch((e) =>
+              res.status(e.response.statusCode).json({ error: e.message })
+            );
+        } else {
+          return res.status(200).json([]);
+        }
+      } else {
+        getAccount();
+      }
+    }
+  } catch (e) {
+    console.error(e);
+    return res.status(e.response.statusCode).json({ error: e.message });
+  }
+});
+
+app.get("/reset-user-infos", (req, res) => {
+  accountsFeed = undefined;
+  return res
+    .status(200)
+    .json({ message: "AccountFeed resettato con successo" });
+});
+
+app.get("/posts", async (req, res) => {
+  const pk = req.query.pk;
+  const postsArr = [];
+  try {
+    const userFeed = ig.feed.user(pk);
+    const extractPosts = () => {
+      userFeed
+        .items()
+        .then((posts) => {
+          postsArr.push(...posts);
+          if (userFeed.isMoreAvailable()) {
+            extractPosts();
+          } else {
+            postsArr.sort((a, b) => b.like_count - a.like_count);
+            return res.status(200).json(postsArr);
+          }
+        })
+        .catch((e) =>
+          res.status(e.response.statusCode).json({ error: e.message })
+        );
+    };
+    return extractPosts();
+  } catch (e) {
+    console.error(e);
     return res.status(e.response.statusCode).json({ error: e.message });
   }
 });

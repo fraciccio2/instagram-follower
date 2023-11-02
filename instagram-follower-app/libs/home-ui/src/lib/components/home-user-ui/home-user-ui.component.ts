@@ -19,5 +19,8 @@ export class HomeUserUiComponent {
   @Output() returnBack = new EventEmitter<void>();
   @Output() openHdProfileImage = new EventEmitter<string>();
   @Output() changeStory = new EventEmitter<boolean>();
+  @Output() openModalForAccounts = new EventEmitter<boolean>();
   @Output() seeStories = new EventEmitter<number>();
+
+  activeId = 1;
 }

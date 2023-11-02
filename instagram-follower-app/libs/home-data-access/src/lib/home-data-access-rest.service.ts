@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import {
   AccountFollowersFeed,
+  AccountInfoRequestModel,
   AccountUsersModel,
   ReelsMediaFeedResponseItem,
   UserRepositoryInfoResponseUser,
@@ -49,19 +50,19 @@ export class HomeDataAccessRestService {
 
   getUser(pk: number): Observable<UserRepositoryInfoResponseUser> {
     const url = `${this.endpoint}/user`;
-    return this.http.get<UserRepositoryInfoResponseUser>(url, {
-      params: { pk },
-    });
-    // return of({
-    //   full_name: 'Francesco Giacomazzo',
-    //   username: 'francescogiacomazzo1',
-    //   biography: 'Unict \n Caltagirone'.replace('\n', '<br>'),
-    //   follower_count: 2458,
-    //   following_count: 254,
-    //   media_count: 12,
-    //   is_private: true,
-    //   is_verified: true,
-    // } as any);
+    // return this.http.get<UserRepositoryInfoResponseUser>(url, {
+    //   params: { pk },
+    // });
+    return of({
+      full_name: 'Francesco Giacomazzo',
+      username: 'francescogiacomazzo1',
+      biography: 'Unict \n Caltagirone',
+      follower_count: 2458,
+      following_count: 254,
+      media_count: 12,
+      is_private: true,
+      is_verified: true,
+    } as any);
   }
 
   getStories(pk: number): Observable<ReelsMediaFeedResponseItem[]> {
@@ -71,74 +72,86 @@ export class HomeDataAccessRestService {
     });
   }
 
+  getUserInfos(
+    request: AccountInfoRequestModel
+  ): Observable<AccountFollowersFeed[]> {
+    const url = `${this.endpoint}/user-infos`;
+    return this.http.post<AccountFollowersFeed[]>(url, request);
+  }
+
+  resetUserInfos() {
+    const url = `${this.endpoint}/reset-user-infos`;
+    return this.http.get(url);
+  }
+
   getProfileInfos(username: string): Observable<AccountUsersModel> {
     const url = `${this.endpoint}/infos`;
-    return this.http.get<AccountUsersModel>(url, {
-      params: { username },
-    });
-    // const followers: AccountFollowersFeed[] = [];
-    // for (let i = 0; i < 200; i++) {
-    //   const name = Math.random().toString(36).substring(2, 7);
-    //   followers.push({
-    //     full_name: name,
-    //     username: name,
-    //     profile_pic_url: 'sdfsdf',
-    //     third_party_downloads_enabled: 0,
-    //     pk: 5544252,
-    //     pk_id: 'dsadadas',
-    //     strong_id__: 'ewrewrwe',
-    //     latest_reel_media: 0,
-    //     is_private: true,
-    //     is_possible_scammer: false,
-    //     is_verified: false,
-    //     fbid_v2: 'sdfsf',
-    //     has_anonymous_profile_picture: false,
-    //     account_badge: [],
-    //     is_possible_bad_actor: {
-    //       is_possible_impersonator: {
-    //         connected_similar_user_id: null,
-    //         is_unconnected_impersonator: false,
-    //       },
-    //       is_possible_scammer: false,
-    //       is_possible_impersonator_threads: {
-    //         connected_similar_user_id: null,
-    //         is_unconnected_impersonator: false,
-    //       },
-    //     },
-    //   });
-    // }
-    // return of({
-    //   followers,
-    //   following: [
-    //     {
-    //       account_badge: [],
-    //       fbid_v2: 'dsfsd',
-    //       full_name: 'ciro',
-    //       has_anonymous_profile_picture: false,
-    //       is_possible_bad_actor: {
-    //         is_possible_impersonator: {
-    //           connected_similar_user_id: null,
-    //           is_unconnected_impersonator: false,
-    //         },
-    //         is_possible_scammer: false,
-    //         is_possible_impersonator_threads: {
-    //           connected_similar_user_id: null,
-    //           is_unconnected_impersonator: false,
-    //         },
-    //       },
-    //       is_possible_scammer: false,
-    //       is_private: true,
-    //       is_verified: false,
-    //       latest_reel_media: 0,
-    //       profile_pic_id: undefined,
-    //       pk_id: 'sdfdsf',
-    //       username: 'ciro32',
-    //       profile_pic_url: 'dasda',
-    //       strong_id__: 'dasda',
-    //       pk: 32423423,
-    //       third_party_downloads_enabled: 0,
-    //     },
-    //   ],
+    // return this.http.get<AccountUsersModel>(url, {
+    //   params: { username },
     // });
+    const followers: AccountFollowersFeed[] = [];
+    for (let i = 0; i < 200; i++) {
+      const name = Math.random().toString(36).substring(2, 7);
+      followers.push({
+        full_name: name,
+        username: name,
+        profile_pic_url: 'sdfsdf',
+        third_party_downloads_enabled: 0,
+        pk: 5544252,
+        pk_id: 'dsadadas',
+        strong_id__: 'ewrewrwe',
+        latest_reel_media: 0,
+        is_private: true,
+        is_possible_scammer: false,
+        is_verified: false,
+        fbid_v2: 'sdfsf',
+        has_anonymous_profile_picture: false,
+        account_badge: [],
+        is_possible_bad_actor: {
+          is_possible_impersonator: {
+            connected_similar_user_id: null,
+            is_unconnected_impersonator: false,
+          },
+          is_possible_scammer: false,
+          is_possible_impersonator_threads: {
+            connected_similar_user_id: null,
+            is_unconnected_impersonator: false,
+          },
+        },
+      });
+    }
+    return of({
+      followers,
+      following: [
+        {
+          account_badge: [],
+          fbid_v2: 'dsfsd',
+          full_name: 'ciro',
+          has_anonymous_profile_picture: false,
+          is_possible_bad_actor: {
+            is_possible_impersonator: {
+              connected_similar_user_id: null,
+              is_unconnected_impersonator: false,
+            },
+            is_possible_scammer: false,
+            is_possible_impersonator_threads: {
+              connected_similar_user_id: null,
+              is_unconnected_impersonator: false,
+            },
+          },
+          is_possible_scammer: false,
+          is_private: true,
+          is_verified: false,
+          latest_reel_media: 0,
+          profile_pic_id: undefined,
+          pk_id: 'sdfdsf',
+          username: 'ciro32',
+          profile_pic_url: 'dasda',
+          strong_id__: 'dasda',
+          pk: 32423423,
+          third_party_downloads_enabled: 0,
+        },
+      ],
+    });
   }
 }

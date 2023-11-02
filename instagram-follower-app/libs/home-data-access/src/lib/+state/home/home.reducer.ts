@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import * as HomeActions from './home.actions';
 import {
+  AccountFollowersFeed,
   AccountUsersModel,
   ReelsMediaFeedResponseItem,
   UserRepositoryInfoResponseUser,
@@ -19,6 +20,7 @@ export interface HomeState {
   user?: UserRepositoryInfoResponseUser;
   stories?: ReelsMediaFeedResponseItem[];
   userImageProfile?: string;
+  userInfos?: AccountFollowersFeed[];
 }
 
 export interface HomePartialState {
@@ -75,6 +77,14 @@ const reducer = createReducer(
   on(HomeActions.resetUser, (state) => ({
     ...state,
     user: undefined,
+  })),
+  on(HomeActions.resetUserInfos, (state) => ({
+    ...state,
+    userInfos: undefined,
+  })),
+  on(HomeActions.loadUserInfos, (state, { scroll, accounts }) => ({
+    ...state,
+    userInfos: scroll ? [...(state.userInfos ?? []), ...accounts] : accounts,
   }))
 );
 

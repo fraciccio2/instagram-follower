@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import {
+  AccountFollowersFeed,
+  AccountInfoRequestModel,
   AccountUsersModel,
   ReelsMediaFeedResponseItem,
   UserRepositoryInfoResponseUser,
@@ -91,3 +93,15 @@ export const resetSearchedUsers = createAction(
 );
 
 export const resetUser = createAction('[Home/API] Reset User');
+
+export const resetUserInfos = createAction('[Home/API] Reset User Infos');
+
+export const initUserInfos = createAction(
+  '[Home/API] Init User Infos',
+  props<{ scroll: boolean; request: AccountInfoRequestModel }>()
+);
+
+export const loadUserInfos = createAction(
+  '[Home/API] Load User Infos',
+  props<{ scroll: boolean; accounts: AccountFollowersFeed[] }>()
+);

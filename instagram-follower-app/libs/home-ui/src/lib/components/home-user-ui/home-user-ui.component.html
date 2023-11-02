@@ -24,11 +24,17 @@
               {{ user.media_count }}
               <p>post</p>
             </div>
-            <div class="d-block me-5 text-center cursor-pointer">
+            <div
+              class="d-block me-5 text-center cursor-pointer"
+              (click)="openModalForAccounts.emit(true)"
+            >
               {{ user.follower_count }}
               <p>follower</p>
             </div>
-            <div class="d-block me-3 text-center cursor-pointer">
+            <div
+              class="d-block me-3 text-center cursor-pointer"
+              (click)="openModalForAccounts.emit(false)"
+            >
               {{ user.following_count }}
               <p>seguiti</p>
             </div>
@@ -38,14 +44,45 @@
           <label class="fw-bold">{{ user.full_name }}</label>
           <div class="mt-2" [innerHTML]="user.biography | space"></div>
         </div>
-        <div class="mt-4 d-flex align-items-center">
-          <img
-            (click)="seeStories.emit(user.pk)"
-            src="assets/img/instagram-logo.webp"
-            class="rounded-circle stories cursor-pointer"
-          />
-          <div class="fw-bold ms-3">Guarda le storie di questo utente</div>
-        </div>
+        <ul
+          class="nav-tabs nav-fill border-0 mt-4"
+          ngbNav
+          #nav="ngbNav"
+          [(activeId)]="activeId"
+        >
+          <li [ngbNavItem]="1">
+            <button
+              ngbNavLink
+              class="border-0 d-flex nav-button justify-content-center"
+            >
+              <i class="bi bi-clock-history me-1"></i>
+              Storie
+            </button>
+            <ng-template ngbNavContent>
+              <div class="mt-4 d-flex align-items-center">
+                <img
+                  (click)="seeStories.emit(user.pk)"
+                  src="assets/img/instagram-logo.webp"
+                  class="rounded-circle stories cursor-pointer"
+                />
+                <div class="fw-bold ms-3">
+                  Guarda le storie di questo utente
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <button
+              ngbNavLink
+              class="border-0 d-flex nav-button justify-content-center"
+            >
+              <i class="bi bi-grid-3x3 me-1"></i>
+              Posts
+            </button>
+            <ng-template> ciao </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
       </div>
       <div
         class="overlay-story h-100 w-100 d-flex justify-content-center align-items-center"
@@ -68,7 +105,7 @@
           *ngIf="stories"
           class="btn border-0 ms-3 r"
           (click)="$event.stopPropagation(); changeStory.emit(true)"
-          [disabled]="activeIndex === stories.length - 1"
+          [disabled]="activeIndex === stories.length - 1 || !stories.length"
         >
           <i class="bi bi-chevron-right"></i>
         </button>

@@ -45,22 +45,24 @@ export class HomeStoryViewerUiComponent implements OnChanges {
           )
           .subscribe((url) => (this.urlToUse = URL.createObjectURL(url)));
       } else {
-        this.loaderFacade.startLoader();
-        this.loadedUrl = false;
-        this.http
-          .get(`${this.endpoint}/proxy-image`, {
-            params: {
-              imageUrl:
-                this.stories[this.activeIndex].image_versions2.candidates[0]
-                  .url,
-            },
-            responseType: 'blob',
-          })
-          .pipe(
-            endLoader(this.loaderFacade),
-            finalize(() => (this.loadedUrl = true))
-          )
-          .subscribe((url) => (this.urlToUse = URL.createObjectURL(url)));
+        if (this.stories?.[this.activeIndex]) {
+          this.loaderFacade.startLoader();
+          this.loadedUrl = false;
+          this.http
+            .get(`${this.endpoint}/proxy-image`, {
+              params: {
+                imageUrl:
+                  this.stories[this.activeIndex].image_versions2.candidates[0]
+                    .url,
+              },
+              responseType: 'blob',
+            })
+            .pipe(
+              endLoader(this.loaderFacade),
+              finalize(() => (this.loadedUrl = true))
+            )
+            .subscribe((url) => (this.urlToUse = URL.createObjectURL(url)));
+        }
       }
     }
   }

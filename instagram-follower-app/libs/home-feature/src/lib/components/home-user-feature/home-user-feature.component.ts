@@ -2,7 +2,9 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HomeFacade } from 'home-data-access';
 import { filterNullish } from 'ng';
 import { take } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HomeShowUserInfosModalComponent } from 'home-sub-feature';
 
 @Component({
   selector: 'home-user-feature',
@@ -16,6 +18,7 @@ import { Router } from '@angular/router';
     (returnBack)="returnBack()"
     (openHdProfileImage)="openHdProfileImage($event)"
     (changeStory)="changeStory($event)"
+    (openModalForAccounts)="openModalForAccounts($event)"
     (seeStories)="seeStories($event)"
   ></home-user-ui>`,
   styles: [],
@@ -23,9 +26,12 @@ import { Router } from '@angular/router';
 export class HomeUserFeatureComponent implements OnInit, OnDestroy {
   private homeFacade = inject(HomeFacade);
   private router = inject(Router);
+  private modalService = inject(NgbModal);
+  private activatedRouter = inject(ActivatedRoute);
 
   showStories = false;
   activeIndex = 0;
+  pk: string = '';
 
   user$ = this.homeFacade.user$;
   userImageProfile$ = this.homeFacade.userImageProfile$;
@@ -37,6 +43,7 @@ export class HomeUserFeatureComponent implements OnInit, OnDestroy {
       .subscribe((user) =>
         this.homeFacade.initUserImageProfile(user.profile_pic_url)
       );
+    this.pk = this.activatedRouter.snapshot.params['id'];
   }
 
   ngOnDestroy() {
@@ -63,5 +70,11 @@ export class HomeUserFeatureComponent implements OnInit, OnDestroy {
 
   returnBack() {
     this.router.navigate(['./home']).catch((e) => console.error(e));
+  }
+
+  openModalForAccounts(followers: boolean) {
+    const modal = this.modalService.open(HomeShowUserInfosModalComponent);
+    modal.componentInstance.pk = this.pk;
+    modal.componentInstance.followers = followers;
   }
 }

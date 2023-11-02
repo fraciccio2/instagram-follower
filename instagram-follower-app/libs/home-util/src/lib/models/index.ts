@@ -28,3 +28,4 @@ export * from './reels-media-feed-response-story-sliders-item.model';
 export * from './reels-media-feed-response-story-countdowns-item.model';
 export * from './reels-media-feed-response-countdown_sticker.model';
 export * from './reels-media-feed-response-slider-sticker.model';
+export * from './account-info-request.model';

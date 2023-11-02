@@ -70,3 +70,8 @@ export const getUserImageProfile = createSelector(
   selectHomeState,
   (state: HomeState) => state.userImageProfile
 );
+
+export const getUserInfos = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.userInfos
+);

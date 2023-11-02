@@ -188,4 +188,38 @@ export class HomeEffects {
       })
     )
   );
+
+  initUserInfos$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initUserInfos),
+      switchMap((action) => {
+        this.loaderFacade.startLoader();
+        return this.homeDataAccessRestService.getUserInfos(action.request).pipe(
+          map((accounts) => {
+            const usersLinks = accounts.map((account) => ({
+              link: account.profile_pic_url,
+              username: account.username,
+            }));
+            this.store.dispatch(
+              HomeActions.initUsersImageProfile({ usersLinks })
+            );
+            return HomeActions.loadUserInfos({
+              scroll: action.scroll,
+              accounts,
+            });
+          }),
+          endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
+
+  resetUserInfos$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(HomeActions.resetUserInfos),
+        switchMap(() => this.homeDataAccessRestService.resetUserInfos())
+      ),
+    { dispatch: false }
+  );
 }

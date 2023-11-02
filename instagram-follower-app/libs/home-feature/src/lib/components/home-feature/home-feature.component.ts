@@ -84,6 +84,6 @@ export class HomeFeatureComponent implements OnInit {
   }
 
   searchUsersModal() {
-    const modal = this.modalService.open(HomeSearchUsersModalComponent);
+    this.modalService.open(HomeSearchUsersModalComponent);
   }
 }

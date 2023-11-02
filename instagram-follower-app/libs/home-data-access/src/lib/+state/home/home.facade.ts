@@ -3,6 +3,7 @@ import { select, Store } from '@ngrx/store';
 
 import * as HomeActions from './home.actions';
 import * as HomeSelectors from './home.selectors';
+import { AccountInfoRequestModel } from 'home-util';
 
 @Injectable()
 export class HomeFacade {
@@ -35,6 +36,7 @@ export class HomeFacade {
   userImageProfile$ = this.store.pipe(
     select(HomeSelectors.getUserImageProfile)
   );
+  userInfos$ = this.store.pipe(select(HomeSelectors.getUserInfos));
 
   /**
    * Use the initialization action to perform one
@@ -82,5 +84,13 @@ export class HomeFacade {
 
   resetUser() {
     this.store.dispatch(HomeActions.resetUser());
+  }
+
+  resetUserInfos() {
+    this.store.dispatch(HomeActions.resetUserInfos());
+  }
+
+  initUserInfos(scroll: boolean, request: AccountInfoRequestModel) {
+    this.store.dispatch(HomeActions.initUserInfos({ scroll, request }));
   }
 }

@@ -27,6 +27,15 @@
     }
   }
 
+  .nav-button {
+    background: transparent;
+    color: var(--green-m);
+
+    &.active {
+      border-bottom: 3px solid var(--green-m) !important;
+    }
+  }
+
   .return-back {
     top: 0.5rem;
     left: 0.5rem;
