@@ -8,7 +8,7 @@
             alt="Instagram Logo"
             width="300"
           />
-          <div class="card mt-3 border-0">
+          <div class="card mt-3 border-0" (keydown.enter)="login.emit()">
             <div
               class="card-body text-center"
               *ngIf="formGroupLogin"

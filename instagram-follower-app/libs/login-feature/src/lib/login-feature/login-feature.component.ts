@@ -23,9 +23,11 @@ export class LoginFeatureComponent {
   });
 
   login() {
-    this.loginFacade.login(
-      this.formGroupLogin.get(this.formControlNameUsername)?.value,
-      this.formGroupLogin.get(this.formControlNamePassword)?.value
-    );
+    if (!this.formGroupLogin.invalid) {
+      this.loginFacade.login(
+        this.formGroupLogin.get(this.formControlNameUsername)?.value,
+        this.formGroupLogin.get(this.formControlNamePassword)?.value
+      );
+    }
   }
 }
