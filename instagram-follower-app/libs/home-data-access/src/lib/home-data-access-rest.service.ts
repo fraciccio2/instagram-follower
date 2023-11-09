@@ -6,6 +6,7 @@ import {
   AccountInfoRequestModel,
   AccountUsersModel,
   ReelsMediaFeedResponseItem,
+  UserFeedResponseItemsItem,
   UserRepositoryInfoResponseUser,
   UserRepositorySearchResponseRootObject,
 } from 'home-util';
@@ -50,19 +51,19 @@ export class HomeDataAccessRestService {
 
   getUser(pk: number): Observable<UserRepositoryInfoResponseUser> {
     const url = `${this.endpoint}/user`;
-    // return this.http.get<UserRepositoryInfoResponseUser>(url, {
-    //   params: { pk },
-    // });
-    return of({
-      full_name: 'Francesco Giacomazzo',
-      username: 'francescogiacomazzo1',
-      biography: 'Unict \n Caltagirone',
-      follower_count: 2458,
-      following_count: 254,
-      media_count: 12,
-      is_private: true,
-      is_verified: true,
-    } as any);
+    return this.http.get<UserRepositoryInfoResponseUser>(url, {
+      params: { pk },
+    });
+    // return of({
+    //   full_name: 'Francesco Giacomazzo',
+    //   username: 'francescogiacomazzo1',
+    //   biography: 'Unict \n Caltagirone',
+    //   follower_count: 2458,
+    //   following_count: 254,
+    //   media_count: 12,
+    //   is_private: true,
+    //   is_verified: true,
+    // } as any);
   }
 
   getStories(pk: number): Observable<ReelsMediaFeedResponseItem[]> {
@@ -82,6 +83,13 @@ export class HomeDataAccessRestService {
   resetUserInfos() {
     const url = `${this.endpoint}/reset-user-infos`;
     return this.http.get(url);
+  }
+
+  getUserPost(pk: number): Observable<UserFeedResponseItemsItem[]> {
+    const url = `${this.endpoint}/post`;
+    return this.http.get<UserFeedResponseItemsItem[]>(url, {
+      params: { pk },
+    });
   }
 
   getProfileInfos(username: string): Observable<AccountUsersModel> {

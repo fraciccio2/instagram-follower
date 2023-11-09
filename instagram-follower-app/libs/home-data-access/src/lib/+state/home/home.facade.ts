@@ -37,6 +37,8 @@ export class HomeFacade {
     select(HomeSelectors.getUserImageProfile)
   );
   userInfos$ = this.store.pipe(select(HomeSelectors.getUserInfos));
+  post$ = this.store.pipe(select(HomeSelectors.getUserPost));
+  postImage$ = this.store.pipe(select(HomeSelectors.getUserPostImage));
 
   /**
    * Use the initialization action to perform one
@@ -92,5 +94,9 @@ export class HomeFacade {
 
   initUserInfos(scroll: boolean, request: AccountInfoRequestModel) {
     this.store.dispatch(HomeActions.initUserInfos({ scroll, request }));
+  }
+
+  initUserPost(pk: number) {
+    this.store.dispatch(HomeActions.initUserPost({ pk }));
   }
 }

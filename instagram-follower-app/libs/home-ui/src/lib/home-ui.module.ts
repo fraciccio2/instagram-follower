@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  HomePostsTabUiComponent,
   HomeStoryViewerUiComponent,
   HomeUiComponent,
   HomeUserUiComponent,
@@ -15,7 +16,13 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     HomeUiComponent,
     HomeUserUiComponent,
     HomeStoryViewerUiComponent,
+    HomePostsTabUiComponent,
   ],
-  exports: [HomeUiComponent, HomeUserUiComponent, HomeStoryViewerUiComponent],
+  exports: [
+    HomeUiComponent,
+    HomeUserUiComponent,
+    HomeStoryViewerUiComponent,
+    HomePostsTabUiComponent,
+  ],
 })
 export class HomeUiModule {}

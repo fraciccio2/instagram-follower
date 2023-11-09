@@ -404,21 +404,21 @@ app.get("/reset-user-infos", (req, res) => {
     .json({ message: "AccountFeed resettato con successo" });
 });
 
-app.get("/posts", async (req, res) => {
+app.get("/post", async (req, res) => {
   const pk = req.query.pk;
-  const postsArr = [];
+  const postArr = [];
   try {
     const userFeed = ig.feed.user(pk);
     const extractPosts = () => {
       userFeed
         .items()
         .then((posts) => {
-          postsArr.push(...posts);
+          postArr.push(...posts);
           if (userFeed.isMoreAvailable()) {
             extractPosts();
           } else {
-            postsArr.sort((a, b) => b.like_count - a.like_count);
-            return res.status(200).json(postsArr);
+            postArr.sort((a, b) => b.like_count - a.like_count);
+            return res.status(200).json(postArr);
           }
         })
         .catch((e) =>

@@ -4,6 +4,7 @@ import {
   AccountInfoRequestModel,
   AccountUsersModel,
   ReelsMediaFeedResponseItem,
+  UserFeedResponseItemsItem,
   UserRepositoryInfoResponseUser,
   UserRepositorySearchResponseRootObject,
 } from 'home-util';
@@ -104,4 +105,24 @@ export const initUserInfos = createAction(
 export const loadUserInfos = createAction(
   '[Home/API] Load User Infos',
   props<{ scroll: boolean; accounts: AccountFollowersFeed[] }>()
+);
+
+export const initUserPost = createAction(
+  '[Home/API] Init User Post',
+  props<{ pk: number }>()
+);
+
+export const loadUserPost = createAction(
+  '[Home/API] Load User Post',
+  props<{ post: UserFeedResponseItemsItem[] }>()
+);
+
+export const initUserPostImage = createAction(
+  '[Home/API] Init User Post Image',
+  props<{ userPost: { link: string; id: string }[] }>()
+);
+
+export const loadUserPostImage = createAction(
+  '[Home/API] Load User Post Image',
+  props<{ images: Record<string, string> }>()
 );

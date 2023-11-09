@@ -1,4 +1,10 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { HomeFacade } from 'home-data-access';
 import { filterNullish } from 'ng';
 import { take } from 'rxjs';
@@ -9,17 +15,22 @@ import { HomeShowUserInfosModalComponent } from 'home-sub-feature';
 @Component({
   selector: 'home-user-feature',
   template: ` <home-user-ui
+    [cols]="cols"
     [activeIndex]="activeIndex"
     [showStories]="showStories"
     [stories]="stories$ | async"
+    [post]="post$ | async"
     [userImageProfile]="userImageProfile$ | async"
     [user]="user$ | async"
+    [postImage]="postImage$ | async"
     (closeStory)="closeStory()"
     (returnBack)="returnBack()"
+    (initPosts)="initPost()"
     (openHdProfileImage)="openHdProfileImage($event)"
     (changeStory)="changeStory($event)"
     (openModalForAccounts)="openModalForAccounts($event)"
     (seeStories)="seeStories($event)"
+    (openPost)="openPost($event)"
   ></home-user-ui>`,
   styles: [],
 })
@@ -32,10 +43,18 @@ export class HomeUserFeatureComponent implements OnInit, OnDestroy {
   showStories = false;
   activeIndex = 0;
   pk: string = '';
+  cols = 5;
 
   user$ = this.homeFacade.user$;
   userImageProfile$ = this.homeFacade.userImageProfile$;
   stories$ = this.homeFacade.stories$;
+  post$ = this.homeFacade.post$;
+  postImage$ = this.homeFacade.postImage$;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
 
   ngOnInit() {
     this.user$
@@ -44,6 +63,7 @@ export class HomeUserFeatureComponent implements OnInit, OnDestroy {
         this.homeFacade.initUserImageProfile(user.profile_pic_url)
       );
     this.pk = this.activatedRouter.snapshot.params['id'];
+    this.checkScreenSize();
   }
 
   ngOnDestroy() {
@@ -76,5 +96,23 @@ export class HomeUserFeatureComponent implements OnInit, OnDestroy {
     const modal = this.modalService.open(HomeShowUserInfosModalComponent);
     modal.componentInstance.pk = this.pk;
     modal.componentInstance.followers = followers;
+  }
+
+  initPost() {
+    if (this.pk) {
+      this.homeFacade.initUserPost(+this.pk);
+    }
+  }
+
+  checkScreenSize() {
+    if (window.innerWidth > 756) {
+      this.cols = 5;
+    } else {
+      this.cols = 2;
+    }
+  }
+
+  openPost(url: string) {
+    window.open(url, '_blank');
   }
 }

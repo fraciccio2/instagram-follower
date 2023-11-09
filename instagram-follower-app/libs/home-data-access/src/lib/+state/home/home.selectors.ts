@@ -75,3 +75,13 @@ export const getUserInfos = createSelector(
   selectHomeState,
   (state: HomeState) => state.userInfos
 );
+
+export const getUserPost = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.post
+);
+
+export const getUserPostImage = createSelector(
+  selectHomeState,
+  (state: HomeState) => state.postImage
+);

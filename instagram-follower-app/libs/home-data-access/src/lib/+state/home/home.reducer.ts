@@ -5,6 +5,7 @@ import {
   AccountFollowersFeed,
   AccountUsersModel,
   ReelsMediaFeedResponseItem,
+  UserFeedResponseItemsItem,
   UserRepositoryInfoResponseUser,
   UserRepositorySearchResponseRootObject,
 } from 'home-util';
@@ -14,6 +15,7 @@ export const HOME_FEATURE_KEY = 'home';
 export interface HomeState {
   imageProfile?: string;
   imagesProfile: Record<string, string>;
+  postImage: Record<string, string>;
   infos?: AccountUsersModel;
   loadingUsersImageProfile: boolean;
   userObj?: UserRepositorySearchResponseRootObject;
@@ -21,6 +23,7 @@ export interface HomeState {
   stories?: ReelsMediaFeedResponseItem[];
   userImageProfile?: string;
   userInfos?: AccountFollowersFeed[];
+  post?: UserFeedResponseItemsItem[];
 }
 
 export interface HomePartialState {
@@ -31,6 +34,7 @@ export const initialHomeState: HomeState = {
   imageProfile: undefined,
   infos: undefined,
   imagesProfile: {},
+  postImage: {},
   loadingUsersImageProfile: false,
   userImageProfile: undefined,
 };
@@ -77,6 +81,7 @@ const reducer = createReducer(
   on(HomeActions.resetUser, (state) => ({
     ...state,
     user: undefined,
+    post: undefined,
   })),
   on(HomeActions.resetUserInfos, (state) => ({
     ...state,
@@ -85,6 +90,14 @@ const reducer = createReducer(
   on(HomeActions.loadUserInfos, (state, { scroll, accounts }) => ({
     ...state,
     userInfos: scroll ? [...(state.userInfos ?? []), ...accounts] : accounts,
+  })),
+  on(HomeActions.loadUserPost, (state, { post }) => ({
+    ...state,
+    post,
+  })),
+  on(HomeActions.loadUserPostImage, (state, { images }) => ({
+    ...state,
+    postImage: images,
   }))
 );
 

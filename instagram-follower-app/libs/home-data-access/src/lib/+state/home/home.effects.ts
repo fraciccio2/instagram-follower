@@ -222,4 +222,55 @@ export class HomeEffects {
       ),
     { dispatch: false }
   );
+
+  initUserPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initUserPost),
+      switchMap((action) => {
+        this.loaderFacade.startLoader();
+        return this.homeDataAccessRestService.getUserPost(action.pk).pipe(
+          map((post) => {
+            const userPost = post.map((p) => ({
+              link: p.image_versions2.candidates[0].url,
+              id: p.pk,
+            }));
+            this.store.dispatch(HomeActions.initUserPostImage({ userPost }));
+            return HomeActions.loadUserPost({
+              post,
+            });
+          }),
+          endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
+
+  initUserPostImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HomeActions.initUserPostImage),
+      switchMap((action) => {
+        this.loaderFacade.startLoader();
+        const obsRest: Observable<Blob>[] = [];
+        action.userPost.forEach((post) =>
+          obsRest.push(
+            this.homeDataAccessRestService.getImageProfile(post.link)
+          )
+        );
+        return forkJoin(obsRest).pipe(
+          map((postUser) => {
+            const createURLs: Record<string, string> = {};
+            postUser.forEach(
+              (post, index) =>
+                (createURLs[action.userPost[index].id] =
+                  URL.createObjectURL(post))
+            );
+            return HomeActions.loadUserPostImage({
+              images: createURLs,
+            });
+          }),
+          endLoader(this.loaderFacade)
+        );
+      })
+    )
+  );
 }

@@ -1,7 +1,7 @@
 <matrix-effect-ui>
   <div class="container-home-user">
     <div class="vh-100 w-100">
-      <div class="container" *ngIf="user">
+      <div class="container h-100 overflow-y-auto" *ngIf="user">
         <div class="position-absolute return-back">
           <button class="btn border-0 p-0 d-flex" (click)="returnBack.emit()">
             <i class="bi bi-chevron-left me-1"></i>
@@ -71,15 +71,24 @@
               </div>
             </ng-template>
           </li>
-          <li [ngbNavItem]="2">
+          <li [ngbNavItem]="2" [destroyOnHide]="false">
             <button
               ngbNavLink
               class="border-0 d-flex nav-button justify-content-center"
             >
               <i class="bi bi-grid-3x3 me-1"></i>
-              Posts
+              Post
             </button>
-            <ng-template> ciao </ng-template>
+            <ng-template ngbNavContent>
+              <home-posts-tab-ui
+                [cols]="cols"
+                [postImage]="postImage"
+                [numberOfPost]="user.media_count"
+                [post]="post"
+                (initPosts)="initPosts.emit()"
+                (openPost)="openPost.emit($event)"
+              ></home-posts-tab-ui>
+            </ng-template>
           </li>
         </ul>
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
