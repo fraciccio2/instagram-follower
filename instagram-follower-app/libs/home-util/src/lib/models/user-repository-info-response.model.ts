@@ -1,8 +1,55 @@
 import { AccountModel } from 'ng';
-import { UserRepositoryInfoResponseBiography_with_entities } from './user-repository-info-response-biography_with_entities.model';
-import { UserRepositoryInfoResponseHdProfilePicVersionsItem } from './user-repository-info-response-hd-profile-pic-versions-item.model';
-import { UserRepositoryInfoResponseHd_profile_pic_url_info } from './user-repository-info-response-hd_profile_pic_url_info.model';
-import { UserRepositoryInfoResponseNametag } from './user-repository-info-response-nametag.model';
+
+export interface UserRepositoryInfoResponseBiography_with_entities {
+  raw_text: string;
+  entities: any[];
+}
+
+export interface UserRepositoryInfoResponseHdProfilePicVersionsItem {
+  width: number;
+  height: number;
+  url: string;
+}
+
+export interface UserRepositoryInfoResponseHd_profile_pic_url_info {
+  url: string;
+  width: number;
+  height: number;
+}
+
+export interface UserRepositoryInfoResponseNametag {
+  mode: number;
+  gradient: string;
+  emoji: string;
+  selfie_sticker: string;
+}
+
+export interface UserRepositorySearchResponseFriendship_status {
+  following: boolean;
+  is_private: boolean;
+  incoming_request: boolean;
+  outgoing_request: boolean;
+  is_bestie: boolean;
+}
+
+export interface UserRepositorySearchResponseRootObject {
+  num_results: number;
+  users: UserRepositorySearchResponseUsersItem[];
+  has_more: boolean;
+  rank_token: string;
+  status: string;
+}
+
+export interface UserRepositorySearchResponseUsersItem extends AccountModel {
+  friendship_status: UserRepositorySearchResponseFriendship_status;
+  follower_count: number;
+  byline: string;
+  mutual_followers_count: number;
+  latest_reel_media?: number;
+  social_context?: string;
+  search_social_context?: string;
+  unseen_count?: number;
+}
 
 export interface UserRepositoryInfoResponseUser extends AccountModel {
   media_count: number;
