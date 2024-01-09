@@ -54,10 +54,10 @@
       },
       "configurations": {
         "production": {
-          "browserTarget": "instagram-follower-app:build:production"
+          "buildTarget": "instagram-follower-app:build:production"
         },
         "development": {
-          "browserTarget": "instagram-follower-app:build:development"
+          "buildTarget": "instagram-follower-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -65,28 +65,21 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "instagram-follower-app:build"
+        "buildTarget": "instagram-follower-app:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
+        "lintFilePatterns": ["./src"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectName}"],
       "options": {
-        "jestConfig": "jest.config.app.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
+        "jestConfig": "jest.config.app.ts"
       }
     }
   }
